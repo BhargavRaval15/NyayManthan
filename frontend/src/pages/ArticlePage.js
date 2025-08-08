@@ -1,0 +1,403 @@
+import React, { useState, useEffect } from "react";
+import { useParams, Link } from "react-router-dom";
+import articleService from "../services/articleService";
+import aiService from "../services/aiService";
+
+const ArticlePage = () => {
+  const { articleNumber } = useParams();
+  const [article, setArticle] = useState(null);
+  const [simplifiedText, setSimplifiedText] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [simplifying, setSimplifying] = useState(false);
+  const [error, setError] = useState(null);
+  const [showOriginal, setShowOriginal] = useState(true);
+  const [aiMetadata, setAiMetadata] = useState(null);
+
+  useEffect(() => {
+    loadArticle();
+  }, [articleNumber]);
+
+  const loadArticle = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const result = await articleService.getArticleByNumber(articleNumber);
+
+      if (result.success) {
+        setArticle(result.data);
+        // If article already has simplified text, use it
+        if (result.data.simplifiedText) {
+          setSimplifiedText(result.data.simplifiedText);
+        }
+      } else {
+        setError(result.message || "Failed to load article");
+      }
+    } catch (err) {
+      setError(err.message || "Failed to load article");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSimplify = async () => {
+    if (!article) return;
+
+    try {
+      setSimplifying(true);
+      setError(null);
+
+      const result = await aiService.simplifyArticle(article.articleNumber);
+
+      if (result.success) {
+        setSimplifiedText(result.data.simplifiedText);
+        setAiMetadata(result.data.metadata);
+
+        // Update the article with simplified text
+        setArticle((prev) => ({
+          ...prev,
+          simplifiedText: result.data.simplifiedText,
+          lastSimplified: new Date(),
+        }));
+
+        // Auto-switch to simplified view after successful simplification
+        setShowOriginal(false);
+      } else {
+        setError(result.message || "Failed to simplify article");
+        // If there's fallback text, use it
+        if (result.fallback) {
+          setSimplifiedText(result.fallback);
+          setShowOriginal(false);
+        }
+      }
+    } catch (err) {
+      setError(err.message || "Failed to simplify article");
+    } finally {
+      setSimplifying(false);
+    }
+  };
+
+  const getPartBadgeClass = (part) => {
+    switch (part) {
+      case "III":
+        return "badge-part-iii";
+      case "IV":
+        return "badge-part-iv";
+      case "IV-A":
+        return "badge-part-iv-a";
+      default:
+        return "badge-part";
+    }
+  };
+
+  const getPartColor = (part) => {
+    switch (part) {
+      case "III":
+        return "blue";
+      case "IV":
+        return "green";
+      case "IV-A":
+        return "purple";
+      default:
+        return "gray";
+    }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="loading-spinner mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading article...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !article) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+            Article Not Found
+          </h1>
+          <p className="text-gray-600 mb-4">{error}</p>
+          <Link to="/legal-atlas" className="btn-primary">
+            Back to Legal Atlas
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50">
+      {/* Header */}
+      <section className="bg-white border-b border-gray-200 py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+            <Link to="/" className="hover:text-primary-600">
+              Home
+            </Link>
+            <span>/</span>
+            <Link to="/legal-atlas" className="hover:text-primary-600">
+              Legal Atlas
+            </Link>
+            <span>/</span>
+            <Link
+              to={`/part/${article.part}`}
+              className="hover:text-primary-600"
+            >
+              Part {article.part}
+            </Link>
+            <span>/</span>
+            <span className="text-gray-800">
+              Article {article.articleNumber}
+            </span>
+          </div>
+
+          <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
+            <div className="mb-4 lg:mb-0">
+              <div className="flex items-center space-x-3 mb-2">
+                <span className={`${getPartBadgeClass(article.part)}`}>
+                  Part {article.part}
+                </span>
+                <span className="text-gray-400">•</span>
+                <span className="text-sm text-gray-600">
+                  {article.partName}
+                </span>
+              </div>
+              <h1 className="text-3xl md:text-4xl font-heading font-bold text-gray-800">
+                Article {article.articleNumber}
+              </h1>
+              <h2 className="text-xl text-gray-600 mt-2">{article.title}</h2>
+            </div>
+
+            <div className="flex space-x-3">
+              <button
+                onClick={handleSimplify}
+                disabled={simplifying}
+                className="btn-primary flex items-center space-x-2"
+              >
+                {simplifying ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Simplifying...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                    <span>AI Simplify</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Content */}
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Main Content */}
+            <div className="lg:col-span-2 space-y-8">
+              {/* Original Text */}
+              <div className="card">
+                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                  <svg
+                    className="w-6 h-6 text-gray-600 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                    />
+                  </svg>
+                  Original Text
+                </h3>
+                <div className="text-legal bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                  {article.originalText}
+                </div>
+              </div>
+
+              {/* Simplified Text */}
+              {simplifiedText && (
+                <div className="card">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                    <svg
+                      className="w-6 h-6 text-primary-600 mr-2"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                      />
+                    </svg>
+                    AI Simplified Explanation
+                  </h3>
+                  <div className="prose prose-lg max-w-none">
+                    <div className="bg-primary-50 p-6 rounded-lg border-l-4 border-primary-400">
+                      <div className="whitespace-pre-wrap text-legal">
+                        {simplifiedText}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* AI Disclaimer */}
+                  <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
+                    <p className="text-sm text-yellow-800">
+                      <strong>AI Disclaimer:</strong> This simplified
+                      explanation is generated by AI and may not capture all
+                      legal nuances. For official interpretations, please
+                      consult legal experts or refer to authoritative sources.
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              {/* Error Message */}
+              {error && (
+                <div className="card">
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                    <div className="flex items-center">
+                      <svg
+                        className="w-5 h-5 text-red-500 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"
+                        />
+                      </svg>
+                      <span className="text-red-700">{error}</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Call to Action */}
+              {!simplifiedText && !simplifying && (
+                <div className="card text-center">
+                  <h3 className="text-xl font-bold text-gray-800 mb-4">
+                    Need a Simpler Explanation?
+                  </h3>
+                  <p className="text-gray-600 mb-6">
+                    Click the "AI Simplify" button to get an easy-to-understand
+                    explanation of this article.
+                  </p>
+                  <button onClick={handleSimplify} className="btn-primary">
+                    Get AI Simplification
+                  </button>
+                </div>
+              )}
+            </div>
+
+            {/* Sidebar */}
+            <div className="space-y-6">
+              {/* Article Info */}
+              <div className="card">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">
+                  Article Info
+                </h3>
+                <div className="space-y-3">
+                  <div>
+                    <span className="text-sm text-gray-600">
+                      Article Number:
+                    </span>
+                    <p className="font-medium">{article.articleNumber}</p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-600">Part:</span>
+                    <p className="font-medium">
+                      {article.part} - {article.partName}
+                    </p>
+                  </div>
+                  <div>
+                    <span className="text-sm text-gray-600">Views:</span>
+                    <p className="font-medium">{article.viewCount || 0}</p>
+                  </div>
+                  {article.lastSimplified && (
+                    <div>
+                      <span className="text-sm text-gray-600">
+                        Last Simplified:
+                      </span>
+                      <p className="font-medium text-sm">
+                        {new Date(article.lastSimplified).toLocaleDateString()}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Tags */}
+              {article.tags && article.tags.length > 0 && (
+                <div className="card">
+                  <h3 className="text-lg font-bold text-gray-800 mb-4">Tags</h3>
+                  <div className="flex flex-wrap gap-2">
+                    {article.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Navigation */}
+              <div className="card">
+                <h3 className="text-lg font-bold text-gray-800 mb-4">
+                  Navigation
+                </h3>
+                <div className="space-y-2">
+                  <Link
+                    to={`/part/${article.part}`}
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    ← Back to Part {article.part}
+                  </Link>
+                  <Link
+                    to="/legal-atlas"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    ← Back to Legal Atlas
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default ArticlePage;
