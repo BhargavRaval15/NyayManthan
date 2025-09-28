@@ -1,13 +1,9 @@
-console.log("🔍 Seeder script starting...");
-
 const mongoose = require("mongoose");
 const Article = require("../models/Article");
 require("dotenv").config();
 
-console.log("📦 Dependencies loaded successfully");
-
 const sampleArticles = [
-  // Part III - Fundamental Rights (Enhanced)
+  // Part III - Fundamental Rights (Articles 12-28)
   {
     articleNumber: "12",
     title: "Definition",
@@ -84,15 +80,6 @@ const sampleArticles = [
     ],
   },
   {
-    articleNumber: "18",
-    title: "Abolition of titles",
-    part: "III",
-    partName: "Fundamental Rights",
-    originalText:
-      "(1) No title, not being a military or academic distinction, shall be conferred by the State. (2) No citizen of India shall accept any title from any foreign State. (3) No person who is not a citizen of India shall, while he holds any office of profit or trust under the State, accept without the consent of the President any title from any foreign State. (4) No person holding any office of profit or trust under the State shall, without the consent of the President, accept any present, emolument, or office of any kind from or under any foreign State.",
-    tags: ["titles", "academic", "military", "foreign state", "president"],
-  },
-  {
     articleNumber: "19",
     title: "Protection of certain rights regarding freedom of speech, etc.",
     part: "III",
@@ -106,22 +93,6 @@ const sampleArticles = [
       "association",
       "movement",
       "profession",
-      "reasonable restrictions",
-    ],
-  },
-  {
-    articleNumber: "20",
-    title: "Protection in respect of conviction for offences",
-    part: "III",
-    partName: "Fundamental Rights",
-    originalText:
-      "(1) No person shall be convicted of any offence except for violation of a law in force at the time of the commission of the act charged as an offence, nor be subjected to a penalty greater than that which might have been inflicted under the law in force at the time of the commission of the offence. (2) No person shall be prosecuted and punished for the same offence more than once. (3) No person accused of any offence shall be compelled to be a witness against himself.",
-    tags: [
-      "conviction",
-      "ex-post-facto",
-      "double jeopardy",
-      "self-incrimination",
-      "criminal law",
     ],
   },
   {
@@ -140,13 +111,7 @@ const sampleArticles = [
     partName: "Fundamental Rights",
     originalText:
       "The State shall provide free and compulsory education to all children of the age of six to fourteen years in such manner as the State may, by law, determine.",
-    tags: [
-      "education",
-      "children",
-      "free education",
-      "compulsory education",
-      "six to fourteen",
-    ],
+    tags: ["education", "children", "free education", "compulsory education"],
   },
   {
     articleNumber: "22",
@@ -164,36 +129,6 @@ const sampleArticles = [
     ],
   },
   {
-    articleNumber: "23",
-    title: "Prohibition of traffic in human beings and forced labour",
-    part: "III",
-    partName: "Fundamental Rights",
-    originalText:
-      "(1) Traffic in human beings and begar and other similar forms of forced labour are prohibited and any contravention of this provision shall be an offence punishable in accordance with law. (2) Nothing in this article shall prevent the State from imposing compulsory service for public purposes, and in imposing such service the State shall not make any discrimination on grounds only of religion, race, caste or class or any of them.",
-    tags: [
-      "human trafficking",
-      "forced labour",
-      "begar",
-      "compulsory service",
-      "public purpose",
-    ],
-  },
-  {
-    articleNumber: "24",
-    title: "Prohibition of employment of children in factories, etc.",
-    part: "III",
-    partName: "Fundamental Rights",
-    originalText:
-      "No child below the age of fourteen years shall be employed to work in any factory or mine or engaged in any other hazardous employment.",
-    tags: [
-      "child labour",
-      "factory",
-      "mine",
-      "hazardous employment",
-      "fourteen years",
-    ],
-  },
-  {
     articleNumber: "25",
     title:
       "Freedom of conscience and free profession, practice and propagation of religion",
@@ -207,48 +142,6 @@ const sampleArticles = [
       "profess",
       "practice",
       "propagate",
-      "public order",
-    ],
-  },
-  {
-    articleNumber: "26",
-    title: "Freedom to manage religious affairs",
-    part: "III",
-    partName: "Fundamental Rights",
-    originalText:
-      "Subject to public order, morality and health, every religious denomination or any section thereof shall have the right— (a) to establish and maintain institutions for religious and charitable purposes; (b) to manage its own affairs in matters of religion; (c) to own and acquire movable and immovable property; and (d) to administer such property in accordance with law.",
-    tags: [
-      "religious denomination",
-      "institutions",
-      "charitable",
-      "property",
-      "administration",
-    ],
-  },
-  {
-    articleNumber: "27",
-    title:
-      "Freedom as to payment of taxes for promotion of any particular religion",
-    part: "III",
-    partName: "Fundamental Rights",
-    originalText:
-      "No person shall be compelled to pay any taxes, the proceeds of which are specifically appropriated in payment of expenses for the promotion or maintenance of any particular religion or religious denomination.",
-    tags: ["taxes", "religion", "promotion", "maintenance", "compulsion"],
-  },
-  {
-    articleNumber: "28",
-    title:
-      "Freedom as to attendance at religious instruction or religious worship in certain educational institutions",
-    part: "III",
-    partName: "Fundamental Rights",
-    originalText:
-      "(1) No religious instruction shall be provided in any educational institution wholly maintained out of State funds. (2) Nothing in clause (1) shall apply to an educational institution which is administered by the State but has been established under any endowment or trust which requires that religious instruction shall be imparted in such institution. (3) No person attending any educational institution recognised by the State or receiving aid out of State funds shall be required to take part in any religious instruction that may be imparted in such institution or to attend any religious worship that may be conducted in such institution or in any premises attached thereto unless such person or, if such person is a minor, his guardian has given his consent thereto.",
-    tags: [
-      "religious instruction",
-      "educational institutions",
-      "state funds",
-      "consent",
-      "worship",
     ],
   },
 
@@ -288,22 +181,6 @@ const sampleArticles = [
     ],
   },
   {
-    articleNumber: "39",
-    title: "Certain principles of policy to be followed by the State",
-    part: "IV",
-    partName: "Directive Principles of State Policy",
-    originalText:
-      "The State shall, in particular, direct its policy towards securing— (a) that the citizens, men and women equally, have the right to an adequate means of livelihood; (b) that the ownership and control of the material resources of the community are so distributed as best to subserve the common good; (c) that the operation of the economic system does not result in the concentration of wealth and means of production to the common detriment; (d) that there is equal pay for equal work for both men and women; (e) that the health and strength of workers, men and women, and the tender age of children are not abused and that citizens are not forced by economic necessity to enter avocations unsuited to their age or strength; (f) that children are given opportunities and facilities to develop in a healthy manner and in conditions of freedom and dignity and that childhood and youth are protected against exploitation and against moral and material abandonment.",
-    tags: [
-      "livelihood",
-      "material resources",
-      "economic system",
-      "equal pay",
-      "children",
-      "workers",
-    ],
-  },
-  {
     articleNumber: "44",
     title: "Uniform civil code for the citizens",
     part: "IV",
@@ -311,16 +188,6 @@ const sampleArticles = [
     originalText:
       "The State shall endeavour to secure for the citizens a uniform civil code throughout the territory of India.",
     tags: ["uniform civil code", "citizens", "territory"],
-  },
-  {
-    articleNumber: "45",
-    title:
-      "Provision for early childhood care and education to children below the age of six years",
-    part: "IV",
-    partName: "Directive Principles of State Policy",
-    originalText:
-      "The State shall endeavour to provide early childhood care and education for all children until they complete the age of six years.",
-    tags: ["early childhood", "education", "children", "six years"],
   },
 
   // Part IV-A - Fundamental Duties
@@ -350,64 +217,65 @@ async function seedDatabase() {
   try {
     console.log("🚀 Starting database seeding process...");
 
-    // Connect to MongoDB
     await mongoose.connect(
       process.env.MONGODB_URI || "mongodb://localhost:27017/nyaymanthan",
-      {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      }
+      { useNewUrlParser: true, useUnifiedTopology: true }
     );
 
     console.log("✅ Connected to MongoDB successfully!");
 
-    // Clear existing articles
     await Article.deleteMany({});
-    console.log("Cleared existing articles");
+    console.log("🗑️ Cleared existing articles");
 
-    // Insert sample articles
     const insertedArticles = await Article.insertMany(sampleArticles);
-    console.log(`Inserted ${insertedArticles.length} articles`);
+    console.log(`📚 Inserted ${insertedArticles.length} articles`);
 
-    // Create text indexes for better search
-    await Article.collection.createIndex({
-      title: "text",
-      originalText: "text",
-      tags: "text",
-    });
-    console.log("Created text indexes");
+    // Handle text indexes (ignore if already exists)
+    try {
+      await Article.collection.createIndex({
+        title: "text",
+        originalText: "text",
+        tags: "text",
+      });
+      console.log("🔍 Created text indexes");
+    } catch (indexError) {
+      if (indexError.code === 85) {
+        console.log("🔍 Text indexes already exist, skipping...");
+      } else {
+        throw indexError;
+      }
+    }
 
-    console.log("Database seeded successfully!");
-
-    // Display summary
     const partCounts = await Article.aggregate([
       { $group: { _id: "$part", count: { $sum: 1 } } },
       { $sort: { _id: 1 } },
     ]);
 
-    console.log("\nArticles by Part:");
+    console.log("\n📊 Articles by Part:");
     partCounts.forEach((part) => {
-      console.log(`Part ${part._id}: ${part.count} articles`);
+      console.log(`   Part ${part._id}: ${part.count} articles`);
     });
+
+    console.log("\n✅ Database seeded successfully!");
+    console.log("🎯 Total Articles:", insertedArticles.length);
+    console.log("🔧 OpenAI Model:", process.env.OPENAI_MODEL || "gpt-4");
   } catch (error) {
-    console.error("Error seeding database:", error);
+    console.error("❌ Error seeding database:", error);
+    throw error;
   } finally {
     await mongoose.disconnect();
-    console.log("Disconnected from MongoDB");
+    console.log("🔌 Disconnected from MongoDB");
   }
 }
 
-// Run the seeder
-console.log("🌱 Script starting...");
-console.log("require.main:", require.main);
-console.log("module:", module);
-console.log("require.main === module:", require.main === module);
-
 if (require.main === module) {
   console.log("🌱 Executing seeder...");
-  seedDatabase();
-} else {
-  console.log("📦 Seeder loaded as module");
+  seedDatabase()
+    .then(() => process.exit(0))
+    .catch((error) => {
+      console.error("Seeding failed:", error);
+      process.exit(1);
+    });
 }
 
 module.exports = { seedDatabase, sampleArticles };

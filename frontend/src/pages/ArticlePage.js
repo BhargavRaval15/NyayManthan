@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useParams, Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
 import articleService from "../services/articleService";
 import aiService from "../services/aiService";
 
@@ -10,14 +11,8 @@ const ArticlePage = () => {
   const [loading, setLoading] = useState(true);
   const [simplifying, setSimplifying] = useState(false);
   const [error, setError] = useState(null);
-  const [showOriginal, setShowOriginal] = useState(true);
-  const [aiMetadata, setAiMetadata] = useState(null);
 
-  useEffect(() => {
-    loadArticle();
-  }, [articleNumber]);
-
-  const loadArticle = async () => {
+  const loadArticle = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -26,10 +21,8 @@ const ArticlePage = () => {
 
       if (result.success) {
         setArticle(result.data);
-        // If article already has simplified text, use it
-        if (result.data.simplifiedText) {
-          setSimplifiedText(result.data.simplifiedText);
-        }
+        // DON'T auto-load simplified text - only show when user clicks button
+        setSimplifiedText(null);
       } else {
         setError(result.message || "Failed to load article");
       }
@@ -38,7 +31,14 @@ const ArticlePage = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [articleNumber]);
+
+  useEffect(() => {
+    // Reset simplified text when navigating to different article
+    setSimplifiedText(null);
+    setError(null);
+    loadArticle();
+  }, [articleNumber, loadArticle]);
 
   const handleSimplify = async () => {
     if (!article) return;
@@ -47,11 +47,18 @@ const ArticlePage = () => {
       setSimplifying(true);
       setError(null);
 
+      console.log(
+        "🚀 Starting AI simplification for article:",
+        article.articleNumber
+      );
+
       const result = await aiService.simplifyArticle(article.articleNumber);
 
+      console.log("📦 AI Service Result:", result);
+
       if (result.success) {
+        console.log("✅ Simplification successful");
         setSimplifiedText(result.data.simplifiedText);
-        setAiMetadata(result.data.metadata);
 
         // Update the article with simplified text
         setArticle((prev) => ({
@@ -59,18 +66,16 @@ const ArticlePage = () => {
           simplifiedText: result.data.simplifiedText,
           lastSimplified: new Date(),
         }));
-
-        // Auto-switch to simplified view after successful simplification
-        setShowOriginal(false);
       } else {
+        console.log("❌ Simplification failed:", result);
         setError(result.message || "Failed to simplify article");
         // If there's fallback text, use it
         if (result.fallback) {
           setSimplifiedText(result.fallback);
-          setShowOriginal(false);
         }
       }
     } catch (err) {
+      console.error("💥 Exception in handleSimplify:", err);
       setError(err.message || "Failed to simplify article");
     } finally {
       setSimplifying(false);
@@ -87,19 +92,6 @@ const ArticlePage = () => {
         return "badge-part-iv-a";
       default:
         return "badge-part";
-    }
-  };
-
-  const getPartColor = (part) => {
-    switch (part) {
-      case "III":
-        return "blue";
-      case "IV":
-        return "green";
-      case "IV-A":
-        return "purple";
-      default:
-        return "gray";
     }
   };
 
@@ -259,8 +251,59 @@ const ArticlePage = () => {
                   </h3>
                   <div className="prose prose-lg max-w-none">
                     <div className="bg-primary-50 p-6 rounded-lg border-l-4 border-primary-400">
-                      <div className="whitespace-pre-wrap text-legal">
-                        {simplifiedText}
+                      <div className="markdown-content">
+                        <ReactMarkdown
+                          components={{
+                            h1: ({ children }) => (
+                              <h1 className="text-2xl font-bold text-primary-700 mb-4 border-b-2 border-primary-200 pb-2">
+                                {children}
+                              </h1>
+                            ),
+                            h2: ({ children }) => (
+                              <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-3">
+                                {children}
+                              </h2>
+                            ),
+                            h3: ({ children }) => (
+                              <h3 className="text-lg font-semibold text-gray-700 mt-4 mb-2">
+                                {children}
+                              </h3>
+                            ),
+                            p: ({ children }) => (
+                              <p className="text-gray-700 mb-4 leading-relaxed">
+                                {children}
+                              </p>
+                            ),
+                            strong: ({ children }) => (
+                              <span className="font-bold text-gray-900">
+                                {children}
+                              </span>
+                            ),
+                            ul: ({ children }) => (
+                              <ul className="list-none space-y-2 mb-4">
+                                {children}
+                              </ul>
+                            ),
+                            li: ({ children }) => (
+                              <li className="flex items-start">
+                                <span className="text-primary-500 mr-2 mt-1">
+                                  •
+                                </span>
+                                <span className="text-gray-700">
+                                  {children}
+                                </span>
+                              </li>
+                            ),
+                            hr: () => <hr className="my-6 border-gray-300" />,
+                            code: ({ children }) => (
+                              <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800">
+                                {children}
+                              </code>
+                            ),
+                          }}
+                        >
+                          {simplifiedText}
+                        </ReactMarkdown>
                       </div>
                     </div>
                   </div>

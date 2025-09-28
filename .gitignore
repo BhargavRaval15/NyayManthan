@@ -11,6 +11,30 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 
+# Python virtual environments
+venv/
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Chroma vector store and embeddings
+backend/books/chunks/chroma_vectorstore/
+
+# PDF and extracted text (ignore large data, keep scripts)
+backend/books/*.pdf
+backend/books/text/
+
+# Jupyter and notebook checkpoints
+.ipynb_checkpoints/
+
+# OS generated files
+Thumbs.db
+.DS_Store
+
 # Build outputs
 /frontend/build/
 /frontend/dist/

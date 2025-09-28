@@ -48,6 +48,52 @@
     @apply text-gray-700 leading-relaxed text-base;
   }
   
+  /* Markdown content styling for AI simplified text */
+  .markdown-content {
+    @apply text-gray-700;
+  }
+  
+  .markdown-content h1 {
+    @apply text-2xl font-bold text-primary-700 mb-4 border-b-2 border-primary-200 pb-2;
+  }
+  
+  .markdown-content h2 {
+    @apply text-xl font-semibold text-gray-800 mt-6 mb-3;
+  }
+  
+  .markdown-content h3 {
+    @apply text-lg font-semibold text-gray-700 mt-4 mb-2;
+  }
+  
+  .markdown-content p {
+    @apply mb-4 leading-relaxed;
+  }
+  
+  .markdown-content strong {
+    @apply font-bold text-gray-900;
+  }
+  
+  .markdown-content ul {
+    @apply list-none space-y-2 mb-4;
+  }
+  
+  .markdown-content li {
+    @apply flex items-start;
+  }
+  
+  .markdown-content li::before {
+    content: "•";
+    @apply text-primary-500 mr-3 mt-1 font-bold;
+  }
+  
+  .markdown-content hr {
+    @apply my-6 border-gray-300;
+  }
+  
+  .markdown-content code {
+    @apply bg-gray-100 px-2 py-1 rounded text-sm font-mono text-gray-800;
+  }
+  
   .badge-part {
     @apply inline-flex items-center px-3 py-1 rounded-full text-sm font-medium;
   }

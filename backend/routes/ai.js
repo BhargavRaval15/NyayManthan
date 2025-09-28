@@ -17,6 +17,7 @@ router.post(
       .optional()
       .isString()
       .withMessage("User ID must be a string"),
+    body("force").optional().isBoolean().withMessage("Force must be a boolean"),
   ],
   async (req, res) => {
     try {
@@ -28,7 +29,7 @@ router.post(
         });
       }
 
-      const { articleNumber, originalText, userId } = req.body;
+      const { articleNumber, originalText, userId, force } = req.body;
 
       // If no original text provided, fetch from database
       let textToSimplify = originalText;
@@ -50,13 +51,21 @@ router.post(
         textToSimplify = article.originalText;
       }
 
-      // Check if article already has recent simplification
-      if (article && article.simplifiedText && article.lastSimplified) {
-        const hoursSinceSimplification =
-          (Date.now() - article.lastSimplified) / (1000 * 60 * 60);
+      // Only use cache if not forced and simplified very recently (within 5 minutes)
+      if (
+        !force &&
+        article &&
+        article.simplifiedText &&
+        article.lastSimplified
+      ) {
+        const minutesSinceSimplification =
+          (Date.now() - article.lastSimplified) / (1000 * 60);
 
-        // If simplified within last 24 hours, return cached version
-        if (hoursSinceSimplification < 24) {
+        // If simplified within last 5 minutes, return cached version
+        if (minutesSinceSimplification < 5) {
+          console.log(
+            `🔄 Returning cached simplification for Article ${articleNumber}`
+          );
           return res.json({
             success: true,
             data: {
@@ -69,6 +78,10 @@ router.post(
           });
         }
       }
+
+      console.log(
+        `🆕 Generating fresh AI simplification for Article ${articleNumber}`
+      );
 
       // Generate new simplification
       const result = await aiService.simplifyArticle(

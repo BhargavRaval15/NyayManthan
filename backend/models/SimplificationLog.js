@@ -34,7 +34,7 @@ const simplificationLogSchema = new mongoose.Schema(
     },
     quality: {
       type: String,
-      enum: ["excellent", "good", "average", "poor"],
+      enum: ["excellent", "good", "average", "poor", null],
       default: null,
     },
     feedback: {

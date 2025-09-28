@@ -2,15 +2,45 @@ import api from "./api";
 
 export const aiService = {
   // Simplify an article using AI
-  async simplifyArticle(articleNumber, originalText = null, userId = null) {
+  async simplifyArticle(
+    articleNumber,
+    originalText = null,
+    userId = null,
+    force = true
+  ) {
     try {
-      const response = await api.post("/ai/simplify", {
+      console.log(
+        `🔄 Frontend: Requesting AI simplification for Article ${articleNumber}`
+      );
+
+      // Build request body without null values to avoid validation errors
+      const requestData = {
         articleNumber,
-        originalText,
-        userId,
-      });
+        force, // Always force fresh generation by default
+      };
+
+      // Only add optional fields if they have values
+      if (originalText) {
+        requestData.originalText = originalText;
+      }
+      if (userId) {
+        requestData.userId = userId;
+      }
+
+      console.log("📤 Request data:", requestData);
+
+      const response = await api.post("/ai/simplify", requestData);
+
+      console.log("📥 Response received:", response.data);
+
       return response.data;
     } catch (error) {
+      console.error("❌ Frontend AI Service Error:", error);
+      console.error("❌ Error details:", {
+        message: error.message,
+        response: error.response?.data,
+        status: error.response?.status,
+      });
       throw this.handleError(error);
     }
   },
