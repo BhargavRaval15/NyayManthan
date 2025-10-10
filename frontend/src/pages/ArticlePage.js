@@ -13,12 +13,16 @@ const ArticlePage = () => {
   const [podcastScript, setPodcastScript] = useState(null);
   const [podcastAudio, setPodcastAudio] = useState(null);
   const [podcastError, setPodcastError] = useState(null);
-  const [playing, setPlaying] = useState({
-    narrator: false,
-    host: false,
-    guest: false,
-  });
+  const [playing, setPlaying] = useState({ narrator: false, host: false, guest: false });
   const audioRef = React.createRef();
+
+  // Language selection
+  const [selectedLanguage, setSelectedLanguage] = useState("en");
+  const languageOptions = [
+    { value: "en", label: "English" },
+    { value: "hi", label: "Hindi" },
+    { value: "gu", label: "Gujarati" },
+  ];
   // Podcast generation handler
   const handleGeneratePodcast = async () => {
     setPodcastLoading(true);
@@ -29,7 +33,7 @@ const ArticlePage = () => {
       const res = await fetch("/api/generate-podcast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic: article.originalText }),
+        body: JSON.stringify({ topic: article.originalText, language: selectedLanguage }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -89,40 +93,24 @@ const ArticlePage = () => {
 
   const handleSimplify = async () => {
     if (!article) return;
-
     try {
       setSimplifying(true);
       setError(null);
-
-      console.log(
-        "🚀 Starting AI simplification for article:",
-        article.articleNumber
-      );
-
-      const result = await aiService.simplifyArticle(article.articleNumber);
-
-      console.log("📦 AI Service Result:", result);
-
+  const result = await aiService.simplifyArticle(article.articleNumber, selectedLanguage);
       if (result.success) {
-        console.log("✅ Simplification successful");
         setSimplifiedText(result.data.simplifiedText);
-
-        // Update the article with simplified text
         setArticle((prev) => ({
           ...prev,
           simplifiedText: result.data.simplifiedText,
           lastSimplified: new Date(),
         }));
       } else {
-        console.log("❌ Simplification failed:", result);
         setError(result.message || "Failed to simplify article");
-        // If there's fallback text, use it
         if (result.fallback) {
           setSimplifiedText(result.fallback);
         }
       }
     } catch (err) {
-      console.error("💥 Exception in handleSimplify:", err);
       setError(err.message || "Failed to simplify article");
     } finally {
       setSimplifying(false);
@@ -144,10 +132,10 @@ const ArticlePage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="loading-spinner mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading article...</p>
+          <p className="text-gray-600 dark:text-gray-300">Loading article...</p>
         </div>
       </div>
     );
@@ -155,14 +143,14 @@ const ArticlePage = () => {
 
   if (error && !article) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+              <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
             Article Not Found
           </h1>
-          <p className="text-gray-600 mb-4">{error}</p>
-          <Link to="/legal-atlas" className="btn-primary">
+          <p className="text-gray-600 dark:text-gray-300 mb-4">{error}</p>
+          <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
             Back to Legal Atlas
           </Link>
         </div>
@@ -171,11 +159,11 @@ const ArticlePage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <section className="bg-white border-b border-gray-200 py-8">
+  <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-8">
         <div className="container mx-auto px-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+          <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
             <Link to="/" className="hover:text-primary-600">
               Home
             </Link>
@@ -207,13 +195,23 @@ const ArticlePage = () => {
                   {article.partName}
                 </span>
               </div>
-              <h1 className="text-3xl md:text-4xl font-heading font-bold text-gray-800">
+              <h1 className="text-3xl md:text-4xl font-heading font-bold text-gray-800 dark:text-gray-100">
                 Article {article.articleNumber}
               </h1>
-              <h2 className="text-xl text-gray-600 mt-2">{article.title}</h2>
+              <h2 className="text-xl text-gray-600 dark:text-gray-300 mt-2">{article.title}</h2>
             </div>
 
-            <div className="flex space-x-3">
+            <div className="flex space-x-3 items-center">
+              <select
+                value={selectedLanguage}
+                onChange={e => setSelectedLanguage(e.target.value)}
+                className="border rounded px-2 py-1 mr-2 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                style={{ minWidth: '120px' }}
+              >
+                {languageOptions.map(opt => (
+                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                ))}
+              </select>
               <button
                 onClick={handleSimplify}
                 disabled={simplifying}
@@ -255,8 +253,8 @@ const ArticlePage = () => {
             {/* Main Content */}
             <div className="lg:col-span-2 space-y-8">
               {/* Original Text */}
-              <div className="card">
-                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+              <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                   <svg
                     className="w-6 h-6 text-gray-600 mr-2"
                     fill="none"
@@ -272,15 +270,15 @@ const ArticlePage = () => {
                   </svg>
                   Original Text
                 </h3>
-                <div className="text-legal bg-gray-50 p-6 rounded-lg border-l-4 border-gray-400">
+                <div className="text-legal bg-gray-50 dark:bg-gray-900 p-6 rounded-lg border-l-4 border-gray-400 dark:border-gray-600">
                   {article.originalText}
                 </div>
               </div>
 
               {/* Simplified Text */}
               {simplifiedText && (
-                <div className="card">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                     <svg
                       className="w-6 h-6 text-primary-600 mr-2"
                       fill="none"
@@ -297,7 +295,7 @@ const ArticlePage = () => {
                     AI Simplified Explanation
                   </h3>
                   <div className="prose prose-lg max-w-none">
-                    <div className="bg-primary-50 p-6 rounded-lg border-l-4 border-primary-400">
+                    <div className="bg-primary-50 dark:bg-gray-900 p-6 rounded-lg border-l-4 border-primary-400 dark:border-primary-700">
                       <div className="markdown-content">
                         <ReactMarkdown
                           components={{
@@ -356,8 +354,8 @@ const ArticlePage = () => {
                   </div>
 
                   {/* AI Disclaimer */}
-                  <div className="mt-4 p-3 bg-yellow-50 border border-yellow-200 rounded-lg">
-                    <p className="text-sm text-yellow-800">
+                  <div className="mt-4 p-3 bg-yellow-50 dark:bg-yellow-900 border border-yellow-200 dark:border-yellow-700 rounded-lg">
+                    <p className="text-sm text-yellow-800 dark:text-yellow-200">
                       <strong>AI Disclaimer:</strong> This simplified
                       explanation is generated by AI and may not capture all
                       legal nuances. For official interpretations, please
@@ -369,8 +367,8 @@ const ArticlePage = () => {
 
               {/* Podcast Feature */}
 
-              <div className="card">
-                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+              <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4 flex items-center">
                   <svg
                     className="w-6 h-6 text-indigo-600 mr-2"
                     fill="none"
@@ -386,22 +384,32 @@ const ArticlePage = () => {
                   </svg>
                   AI Story Generator
                 </h3>
-                <button
-                  onClick={handleGeneratePodcast}
-                  disabled={podcastLoading}
-                  className="btn-primary mb-4"
-                >
-                  {podcastLoading
-                    ? "Generating Story..."
-                    : "Listen Story / Podcast"}
-                </button>
+                <div className="flex space-x-3 items-center mb-4">
+                  <select
+                    value={selectedLanguage}
+                    onChange={e => setSelectedLanguage(e.target.value)}
+                    className="border rounded px-2 py-1 dark:bg-gray-800 dark:text-white dark:border-gray-700"
+                    style={{ minWidth: '120px' }}
+                  >
+                    {languageOptions.map(opt => (
+                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={handleGeneratePodcast}
+                    disabled={podcastLoading}
+                    className="btn-primary"
+                  >
+                    {podcastLoading ? "Generating Story..." : "Listen Story / Podcast"}
+                  </button>
+                </div>
                 {podcastError && (
                   <div className="text-red-600 mb-2">{podcastError}</div>
                 )}
                 {podcastScript && (
                   <div className="mb-4">
                     <h4 className="font-semibold mb-2">Story</h4>
-                    <pre className="bg-gray-100 p-3 rounded text-sm whitespace-pre-wrap">
+                    <pre className="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm whitespace-pre-wrap">
                       {podcastScript}
                     </pre>
                   </div>
@@ -441,8 +449,8 @@ const ArticlePage = () => {
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-2">
-                    <span className="text-red-700 font-semibold">
+                  <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4 mt-2">
+                    <span className="text-red-700 dark:text-red-200 font-semibold">
                       Audio could not be generated for this story. Please try
                       again or check your backend settings.
                     </span>
@@ -452,11 +460,11 @@ const ArticlePage = () => {
 
               {/* Error Message */}
               {error && (
-                <div className="card">
-                  <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                  <div className="bg-red-50 dark:bg-red-900 border border-red-200 dark:border-red-700 rounded-lg p-4">
                     <div className="flex items-center">
                       <svg
-                        className="w-5 h-5 text-red-500 mr-2"
+                        className="w-5 h-5 text-red-500 dark:text-red-200 mr-2"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -468,7 +476,7 @@ const ArticlePage = () => {
                           d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"
                         />
                       </svg>
-                      <span className="text-red-700">{error}</span>
+                      <span className="text-red-700 dark:text-red-200">{error}</span>
                     </div>
                   </div>
                 </div>
@@ -476,15 +484,15 @@ const ArticlePage = () => {
 
               {/* Call to Action */}
               {!simplifiedText && !simplifying && (
-                <div className="card text-center">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">
+                <div className="card text-center dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-gray-100 mb-4">
                     Need a Simpler Explanation?
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">
                     Click the "AI Simplify" button to get an easy-to-understand
                     explanation of this article.
                   </p>
-                  <button onClick={handleSimplify} className="btn-primary">
+                  <button onClick={handleSimplify} className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
                     Get AI Simplification
                   </button>
                 </div>
@@ -494,30 +502,30 @@ const ArticlePage = () => {
             {/* Sidebar */}
             <div className="space-y-6">
               {/* Article Info */}
-              <div className="card">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">
+              <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
                   Article Info
                 </h3>
                 <div className="space-y-3">
                   <div>
-                    <span className="text-sm text-gray-600">
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
                       Article Number:
                     </span>
                     <p className="font-medium">{article.articleNumber}</p>
                   </div>
                   <div>
-                    <span className="text-sm text-gray-600">Part:</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Part:</span>
                     <p className="font-medium">
                       {article.part} - {article.partName}
                     </p>
                   </div>
                   <div>
-                    <span className="text-sm text-gray-600">Views:</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">Views:</span>
                     <p className="font-medium">{article.viewCount || 0}</p>
                   </div>
                   {article.lastSimplified && (
                     <div>
-                      <span className="text-sm text-gray-600">
+                      <span className="text-sm text-gray-600 dark:text-gray-300">
                         Last Simplified:
                       </span>
                       <p className="font-medium text-sm">
@@ -530,13 +538,13 @@ const ArticlePage = () => {
 
               {/* Tags */}
               {article.tags && article.tags.length > 0 && (
-                <div className="card">
-                  <h3 className="text-lg font-bold text-gray-800 mb-4">Tags</h3>
+                <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Tags</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag, index) => (
                       <span
                         key={index}
-                        className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
+                        className="px-3 py-1 bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-200 rounded-full text-sm"
                       >
                         {tag}
                       </span>
@@ -546,22 +554,22 @@ const ArticlePage = () => {
               )}
 
               {/* Navigation */}
-              <div className="card">
-                <h3 className="text-lg font-bold text-gray-800 mb-4">
+                <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
                   Navigation
                 </h3>
                 <div className="space-y-2">
                   <Link
                     to={`/part/${article.part}`}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                   >
-                    ← Back to Part {article.part}
+                     Back to Part {article.part}
                   </Link>
                   <Link
                     to="/legal-atlas"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                    className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-900 rounded-lg transition-colors"
                   >
-                    ← Back to Legal Atlas
+                     Back to Legal Atlas
                   </Link>
                 </div>
               </div>

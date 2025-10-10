@@ -4,6 +4,7 @@ export const aiService = {
   // Simplify an article using AI
   async simplifyArticle(
     articleNumber,
+    language = "en",
     originalText = null,
     userId = null,
     force = true
@@ -16,6 +17,7 @@ export const aiService = {
       // Build request body without null values to avoid validation errors
       const requestData = {
         articleNumber,
+        language,
         force, // Always force fresh generation by default
       };
 

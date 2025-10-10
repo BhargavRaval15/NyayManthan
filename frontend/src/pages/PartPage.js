@@ -105,16 +105,16 @@ const PartPage = () => {
 
   if (!currentPart) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="text-red-500 text-6xl mb-4">⚠️</div>
-          <h1 className="text-2xl font-bold text-gray-800 mb-2">
+          <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
             Invalid Part
           </h1>
-          <p className="text-gray-600 mb-4">
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
             The requested part does not exist.
           </p>
-          <Link to="/legal-atlas" className="btn-primary">
+          <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
             Back to Legal Atlas
           </Link>
         </div>
@@ -124,23 +124,23 @@ const PartPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="loading-spinner mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading articles...</p>
+          <p className="text-gray-600 dark:text-gray-300">Loading articles...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <section
-        className={`${currentPart.bgColor} ${currentPart.borderColor} border-b py-12`}
+        className={`${currentPart.bgColor} ${currentPart.borderColor} border-b py-12 dark:bg-gray-800 dark:border-gray-700`}
       >
         <div className="container mx-auto px-4">
-          <div className="flex items-center space-x-2 text-sm text-gray-600 mb-4">
+          <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
             <Link to="/" className="hover:text-primary-600">
               Home
             </Link>
@@ -165,29 +165,29 @@ const PartPage = () => {
               <span className="text-3xl">{currentPart.icon}</span>
             </div>
             <div>
-              <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800">
+              <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 dark:text-gray-100">
                 Part {partNumber}
               </h1>
-              <h2 className="text-xl text-gray-600 mt-2">{currentPart.name}</h2>
-              <p className="text-gray-500 mt-1">{currentPart.range}</p>
+              <h2 className="text-xl text-gray-600 dark:text-gray-300 mt-2">{currentPart.name}</h2>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">{currentPart.range}</p>
             </div>
           </div>
 
-          <p className="text-lg text-gray-700 max-w-4xl mb-6">
+          <p className="text-lg text-gray-700 dark:text-gray-200 max-w-4xl mb-6">
             {currentPart.description}
           </p>
 
           {/* Part III specific features */}
           {partNumber === "III" && (
             <div className="mt-8">
-              <h3 className="text-xl font-semibold text-gray-800 mb-4">
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
                 Key Categories
               </h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {currentPart.keyFeatures.map((feature, index) => (
                   <div
                     key={index}
-                    className="bg-white rounded-lg p-4 shadow-sm border border-blue-100"
+                    className="bg-white dark:bg-gray-900 dark:border-gray-700 rounded-lg p-4 shadow-sm border border-blue-100"
                   >
                     <span className="text-sm font-medium text-blue-600">
                       {feature}
@@ -196,8 +196,8 @@ const PartPage = () => {
                 ))}
               </div>
               {currentPart.importance && (
-                <div className="mt-6 bg-blue-100 border-l-4 border-blue-500 p-4 rounded">
-                  <p className="text-blue-800 italic">
+                <div className="mt-6 bg-blue-100 dark:bg-blue-900 border-l-4 border-blue-500 dark:border-blue-700 p-4 rounded">
+                  <p className="text-blue-800 dark:text-blue-200 italic">
                     <strong>Did you know?</strong> {currentPart.importance}
                   </p>
                 </div>
@@ -209,28 +209,28 @@ const PartPage = () => {
 
       {/* Search and Articles */}
       <section className="py-12">
-        <div className="container mx-auto px-4">
+  <div className="container mx-auto px-4">
           {error ? (
             <div className="text-center">
               <div className="text-red-500 text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
                 Error Loading Articles
               </h2>
-              <p className="text-gray-600 mb-4">{error}</p>
-              <button onClick={loadArticles} className="btn-primary">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{error}</p>
+              <button onClick={loadArticles} className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
                 Try Again
               </button>
             </div>
           ) : articles.length === 0 ? (
             <div className="text-center">
-              <div className="text-gray-400 text-6xl mb-4">📄</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">📄</div>
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
                 No Articles Found
               </h2>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 No articles available for this part.
               </p>
-              <Link to="/legal-atlas" className="btn-primary">
+              <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
                 Back to Legal Atlas
               </Link>
             </div>
@@ -273,11 +273,11 @@ const PartPage = () => {
 
               <div className="grid gap-6">
                 {filteredArticles.map((article) => (
-                  <div key={article.articleNumber} className="card-hover">
+                  <div key={article.articleNumber} className="card-hover dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
-                          <span className="text-lg font-bold text-gray-800">
+                          <span className="text-lg font-bold text-gray-800 dark:text-white">
                             Article {article.articleNumber}
                           </span>
                           <span className={`${currentPart.badgeClass}`}>
@@ -303,15 +303,15 @@ const PartPage = () => {
                           )}
                         </div>
 
-                        <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                        <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-3">
                           {article.title}
                         </h3>
 
-                        <p className="text-gray-600 mb-4 line-clamp-3">
+                        <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
                           {article.originalText.substring(0, 200)}...
                         </p>
 
-                        <div className="flex items-center space-x-4 text-sm text-gray-500">
+                        <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                           <span className="flex items-center">
                             <svg
                               className="w-4 h-4 mr-1"
@@ -360,7 +360,7 @@ const PartPage = () => {
                       <div className="ml-4 flex-shrink-0">
                         <Link
                           to={`/article/${article.articleNumber}`}
-                          className="btn-outline"
+                          className="btn-outline dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
                         >
                           Read Article
                         </Link>
@@ -375,12 +375,12 @@ const PartPage = () => {
       </section>
 
       {/* Navigation */}
-      <section className="py-8 bg-white border-t border-gray-200">
+  <section className="py-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <Link
               to="/legal-atlas"
-              className="flex items-center text-gray-600 hover:text-primary-600 transition-colors"
+              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -398,7 +398,7 @@ const PartPage = () => {
               Back to Legal Atlas
             </Link>
 
-            <div className="text-sm text-gray-500">
+            <div className="text-sm text-gray-500 dark:text-gray-400">
               {articles.length} article{articles.length !== 1 ? "s" : ""} in
               Part {partNumber}
             </div>

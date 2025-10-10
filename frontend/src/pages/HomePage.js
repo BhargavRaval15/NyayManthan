@@ -3,17 +3,24 @@ import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
-    <div className="min-h-screen">
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="gradient-bg constitution-pattern py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-heading font-bold text-gray-800 mb-6">
+  <section className="gradient-bg constitution-pattern py-20 dark:bg-gray-900 relative">
+      <div className="satyamev-text-banner">
+  <img src="/images/dark.jpg" alt="Satyamev Jayate" className="side-img dark-img" />
+  <img src="/images/light.jpg" alt="Satyamev Jayate" className="side-img light-img" />
+        <span>सत्यमेव जयते</span>
+  <img src="/images/dark.jpg" alt="Satyamev Jayate" className="side-img dark-img" />
+  <img src="/images/light.jpg" alt="Satyamev Jayate" className="side-img light-img" />
+      </div>
+      <div className="container mx-auto px-4 text-center relative z-10">
+          <h1 className="text-5xl md:text-6xl font-heading font-bold text-gray-800 dark:text-gray-100 mb-6">
             <span className="text-primary-600">न्याय</span>मंथन
           </h1>
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
             Learn the <strong>Indian Constitution</strong> in a simpler manner
           </p>
-          <p className="text-lg text-gray-700 mb-12 max-w-2xl mx-auto">
+          <p className="text-lg text-gray-700 dark:text-gray-200 mb-12 max-w-2xl mx-auto">
             AI-powered platform to understand your fundamental rights, directive
             principles, and fundamental duties without legal jargon.
           </p>
@@ -30,7 +37,7 @@ const HomePage = () => {
       </section>
 
       {/* Constitution Parts Overview */}
-      <section className="py-16 bg-white">
+  <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <h2 className="section-title text-center mb-12">
             Explore Constitutional Parts
@@ -38,16 +45,16 @@ const HomePage = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {/* Part III */}
-            <div className="card-hover text-center">
-              <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="card-hover text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-blue-600">III</span>
               </div>
-              <h3 className="text-xl font-bold mb-3">Fundamental Rights</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-bold mb-3 dark:text-gray-100">Fundamental Rights</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Your basic rights as a citizen - from freedom of speech to right
                 to life.
               </p>
-              <span className="text-sm text-gray-500 mb-4 block">
+              <span className="text-sm text-gray-500 dark:text-gray-400 mb-4 block">
                 Articles 12-35
               </span>
               <Link to="/part/III" className="btn-primary">
@@ -56,15 +63,15 @@ const HomePage = () => {
             </div>
 
             {/* Part IV */}
-            <div className="card-hover text-center">
-              <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="card-hover text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-2xl font-bold text-green-600">IV</span>
               </div>
-              <h3 className="text-xl font-bold mb-3">Directive Principles</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-bold mb-3 dark:text-gray-100">Directive Principles</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Guidelines for the government to create a just society.
               </p>
-              <span className="text-sm text-gray-500 mb-4 block">
+              <span className="text-sm text-gray-500 dark:text-gray-400 mb-4 block">
                 Articles 36-51
               </span>
               <Link to="/part/IV" className="btn-primary">
@@ -73,15 +80,15 @@ const HomePage = () => {
             </div>
 
             {/* Part IV-A */}
-            <div className="card-hover text-center">
-              <div className="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <div className="card-hover text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-xl font-bold text-purple-600">IV-A</span>
               </div>
-              <h3 className="text-xl font-bold mb-3">Fundamental Duties</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-bold mb-3 dark:text-gray-100">Fundamental Duties</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 Your responsibilities as a citizen of India.
               </p>
-              <span className="text-sm text-gray-500 mb-4 block">
+              <span className="text-sm text-gray-500 dark:text-gray-400 mb-4 block">
                 Article 51A
               </span>
               <Link to="/part/IV-A" className="btn-primary">
@@ -93,7 +100,7 @@ const HomePage = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-gray-50">
+  <section className="py-16 bg-gray-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <h2 className="section-title text-center mb-12">
             Why Choose NyayManthan?
@@ -101,8 +108,8 @@ const HomePage = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* AI Simplification */}
-            <div className="card text-center">
-              <div className="w-12 h-12 bg-primary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="card text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-primary-600"
                   fill="none"
@@ -117,18 +124,18 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold mb-3">
+              <h3 className="text-lg font-bold mb-3 dark:text-gray-100">
                 AI-Powered Simplification
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 Complex legal language simplified using advanced AI to help you
                 understand your rights.
               </p>
             </div>
 
             {/* Easy Navigation */}
-            <div className="card text-center">
-              <div className="w-12 h-12 bg-secondary-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="card text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-12 h-12 bg-secondary-100 dark:bg-secondary-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-secondary-600"
                   fill="none"
@@ -143,16 +150,16 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold mb-3">Easy Navigation</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-bold mb-3 dark:text-gray-100">Easy Navigation</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Intuitive interface to browse through constitutional articles
                 and parts.
               </p>
             </div>
 
             {/* Real Examples */}
-            <div className="card text-center">
-              <div className="w-12 h-12 bg-accent-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="card text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-12 h-12 bg-accent-100 dark:bg-accent-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-accent-600"
                   fill="none"
@@ -167,16 +174,16 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold mb-3">Real-World Examples</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-bold mb-3 dark:text-gray-100">Real-World Examples</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Understand how constitutional articles apply to everyday
                 situations.
               </p>
             </div>
 
             {/* Case Studies */}
-            <div className="card text-center">
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="card text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-green-600"
                   fill="none"
@@ -191,16 +198,16 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold mb-3">Case Studies</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-bold mb-3 dark:text-gray-100">Case Studies</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Learn from important legal cases that shaped constitutional
                 interpretation.
               </p>
             </div>
 
             {/* Search */}
-            <div className="card text-center">
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="card text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-purple-600"
                   fill="none"
@@ -215,16 +222,16 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold mb-3">Smart Search</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-bold mb-3 dark:text-gray-100">Smart Search</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Find relevant articles using natural language search powered by
                 AI.
               </p>
             </div>
 
             {/* Mobile Friendly */}
-            <div className="card text-center">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
+            <div className="card text-center dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-6 h-6 text-blue-600"
                   fill="none"
@@ -239,8 +246,8 @@ const HomePage = () => {
                   />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold mb-3">Mobile Friendly</h3>
-              <p className="text-gray-600">
+              <h3 className="text-lg font-bold mb-3 dark:text-gray-100">Mobile Friendly</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 Access constitutional knowledge anytime, anywhere on any device.
               </p>
             </div>
@@ -249,12 +256,12 @@ const HomePage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-primary-600">
+  <section className="py-16 bg-primary-600 dark:bg-primary-900">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-white dark:text-primary-100 mb-4">
             Ready to Start Learning?
           </h2>
-          <p className="text-xl text-primary-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl text-primary-100 dark:text-primary-200 mb-8 max-w-2xl mx-auto">
             Join thousands of citizens who are learning about their
             constitutional rights and duties.
           </p>

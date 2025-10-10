@@ -29,7 +29,7 @@ router.post(
         });
       }
 
-      const { articleNumber, originalText, userId, force } = req.body;
+  const { articleNumber, originalText, userId, force, language } = req.body;
 
       // If no original text provided, fetch from database
       let textToSimplify = originalText;
@@ -87,7 +87,8 @@ router.post(
       const result = await aiService.simplifyArticle(
         articleNumber,
         textToSimplify,
-        userId || "anonymous"
+        userId || "anonymous",
+        language || "en"
       );
 
       if (result.success) {

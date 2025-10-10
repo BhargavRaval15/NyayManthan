@@ -64,15 +64,15 @@ const SearchPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <section className="bg-white border-b border-gray-200 py-12">
+  <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            <h1 className="text-4xl font-heading font-bold text-gray-800 text-center mb-6">
+            <h1 className="text-4xl font-heading font-bold text-gray-800 dark:text-white text-center mb-6">
               Search Articles
             </h1>
-            <p className="text-lg text-gray-600 text-center mb-8">
+            <p className="text-lg text-gray-600 dark:text-gray-300 text-center mb-8">
               Find constitutional articles using keywords, topics, or legal
               concepts
             </p>
@@ -85,12 +85,12 @@ const SearchPage = () => {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   placeholder="Search for articles... (e.g., 'freedom of speech', 'equality', 'fundamental rights')"
-                  className="w-full px-6 py-4 text-lg border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent pr-16"
+                  className="w-full px-6 py-4 text-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent pr-16"
                 />
                 <button
                   type="submit"
                   disabled={loading || !query.trim()}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 dark:hover:bg-primary-400 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                 >
                   {loading ? (
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -117,23 +117,23 @@ const SearchPage = () => {
       </section>
 
       {/* Results */}
-      <section className="py-12">
+      <section className="py-12 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           {loading && (
             <div className="text-center">
               <div className="loading-spinner mx-auto mb-4"></div>
-              <p className="text-gray-600">Searching articles...</p>
+              <p className="text-gray-600 dark:text-gray-300">Searching articles...</p>
             </div>
           )}
 
           {error && (
             <div className="text-center">
               <div className="text-red-500 text-6xl mb-4">⚠️</div>
-              <h2 className="text-2xl font-bold text-gray-800 mb-2">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
                 Search Error
               </h2>
-              <p className="text-gray-600 mb-4">{error}</p>
-              <button onClick={() => handleSearch()} className="btn-primary">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">{error}</p>
+              <button onClick={() => handleSearch()} className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
                 Try Again
               </button>
             </div>
@@ -142,10 +142,10 @@ const SearchPage = () => {
           {hasSearched && !loading && !error && (
             <>
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-800 mb-2">
-                  Search Results
-                </h2>
-                <p className="text-gray-600">
+                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                Search Results
+              </h2>
+              <p className="text-gray-600 dark:text-gray-300">
                   {results.length > 0
                     ? `Found ${results.length} article${
                         results.length !== 1 ? "s" : ""
@@ -157,11 +157,11 @@ const SearchPage = () => {
               {results.length > 0 ? (
                 <div className="grid gap-6">
                   {results.map((article) => (
-                    <div key={article.articleNumber} className="card-hover">
+                    <div key={article.articleNumber} className="card-hover dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
-                            <span className="text-lg font-bold text-gray-800">
+                            <span className="text-lg font-bold text-gray-800 dark:text-white">
                               Article {article.articleNumber}
                             </span>
                             <span
@@ -189,15 +189,15 @@ const SearchPage = () => {
                             )}
                           </div>
 
-                          <h3 className="text-xl font-semibold text-gray-800 mb-3">
+                          <h3 className="text-xl font-semibold text-gray-800 dark:text-white mb-3">
                             {article.title}
                           </h3>
 
-                          <p className="text-gray-600 mb-4 line-clamp-3">
+                          <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-3">
                             {article.originalText.substring(0, 300)}...
                           </p>
 
-                          <div className="flex items-center space-x-4 text-sm text-gray-500">
+                          <div className="flex items-center space-x-4 text-sm text-gray-500 dark:text-gray-400">
                             <span className="flex items-center">
                               <svg
                                 className="w-4 h-4 mr-1"
@@ -263,7 +263,7 @@ const SearchPage = () => {
                         <div className="ml-4 flex-shrink-0">
                           <Link
                             to={`/article/${article.articleNumber}`}
-                            className="btn-outline"
+                            className="btn-outline dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
                           >
                             Read Article
                           </Link>
@@ -273,22 +273,22 @@ const SearchPage = () => {
                   ))}
                 </div>
               ) : (
-                <div className="text-center py-12">
-                  <div className="text-gray-400 text-6xl mb-4">🔍</div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">
+                <div className="text-center py-12 dark:bg-gray-900">
+                  <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">🔍</div>
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                     No Results Found
                   </h3>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 dark:text-gray-300 mb-6">
                     We couldn't find any articles matching your search. Try
                     different keywords or browse by parts.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link to="/legal-atlas" className="btn-primary">
+                    <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
                       Browse Legal Atlas
                     </Link>
                     <button
                       onClick={() => setQuery("")}
-                      className="btn-outline"
+                      className="btn-outline dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700"
                     >
                       Clear Search
                     </button>
@@ -301,12 +301,12 @@ const SearchPage = () => {
           {/* Search Suggestions */}
           {!hasSearched && (
             <div className="max-w-4xl mx-auto">
-              <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+              <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 text-center">
                 Popular Search Terms
               </h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="card">
-                  <h3 className="font-bold text-gray-800 mb-3">
+                <div className="card dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+                  <h3 className="font-bold text-gray-800 dark:text-white mb-3">
                     Rights & Freedoms
                   </h3>
                   <div className="space-y-2">
@@ -315,7 +315,7 @@ const SearchPage = () => {
                         setQuery("freedom of speech");
                         handleSearch("freedom of speech");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Freedom of Speech
                     </button>
@@ -324,7 +324,7 @@ const SearchPage = () => {
                         setQuery("right to life");
                         handleSearch("right to life");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Right to Life
                     </button>
@@ -333,15 +333,15 @@ const SearchPage = () => {
                         setQuery("equality");
                         handleSearch("equality");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Equality
                     </button>
                   </div>
                 </div>
 
-                <div className="card">
-                  <h3 className="font-bold text-gray-800 mb-3">
+                <div className="card dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+                  <h3 className="font-bold text-gray-800 dark:text-white mb-3">
                     Legal Concepts
                   </h3>
                   <div className="space-y-2">
@@ -350,7 +350,7 @@ const SearchPage = () => {
                         setQuery("fundamental rights");
                         handleSearch("fundamental rights");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Fundamental Rights
                     </button>
@@ -359,7 +359,7 @@ const SearchPage = () => {
                         setQuery("directive principles");
                         handleSearch("directive principles");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Directive Principles
                     </button>
@@ -368,15 +368,15 @@ const SearchPage = () => {
                         setQuery("fundamental duties");
                         handleSearch("fundamental duties");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Fundamental Duties
                     </button>
                   </div>
                 </div>
 
-                <div className="card">
-                  <h3 className="font-bold text-gray-800 mb-3">
+                <div className="card dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+                  <h3 className="font-bold text-gray-800 dark:text-white mb-3">
                     Social Issues
                   </h3>
                   <div className="space-y-2">
@@ -385,7 +385,7 @@ const SearchPage = () => {
                         setQuery("discrimination");
                         handleSearch("discrimination");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Discrimination
                     </button>
@@ -394,7 +394,7 @@ const SearchPage = () => {
                         setQuery("education");
                         handleSearch("education");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Education
                     </button>
@@ -403,7 +403,7 @@ const SearchPage = () => {
                         setQuery("environment");
                         handleSearch("environment");
                       }}
-                      className="block text-left text-primary-600 hover:text-primary-700 text-sm"
+                      className="block text-left text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 text-sm"
                     >
                       Environment
                     </button>

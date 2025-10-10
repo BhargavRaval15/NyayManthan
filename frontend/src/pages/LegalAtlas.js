@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 
 const LegalAtlas = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-      <section className="bg-white border-b border-gray-200 py-12">
+  <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-12">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 mb-4">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 dark:text-gray-100 mb-4">
               Legal Atlas
             </h1>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
               Navigate through the Indian Constitution with ease. Explore
               fundamental rights, directive principles, and fundamental duties
               in a structured manner.
@@ -21,41 +21,41 @@ const LegalAtlas = () => {
       </section>
 
       {/* Constitution Parts */}
-      <section className="py-16">
+  <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
-          <div className="grid gap-12">
+          <div className="grid gap-12 dark:bg-gray-800">
             {/* Part III - Fundamental Rights */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <div className="bg-blue-50 px-8 py-6 border-b border-blue-100">
+            <div className="bg-white dark:bg-gray-900 dark:border-gray-700 rounded-2xl shadow-lg overflow-hidden border border-gray-200">
+              <div className="bg-blue-50 dark:bg-blue-900 px-8 py-6 border-b border-blue-100 dark:border-blue-900">
                 <div className="flex items-center space-x-4">
                   <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center">
                     <span className="text-2xl font-bold text-white">III</span>
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-800">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100">
                       Part III
                     </h2>
-                    <p className="text-blue-600 font-medium">
+                    <p className="text-blue-600 dark:text-blue-300 font-medium">
                       Fundamental Rights
                     </p>
-                    <p className="text-gray-600 text-sm">Articles 12-35</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">Articles 12-35</p>
                   </div>
                 </div>
               </div>
 
-              <div className="p-8">
-                <p className="text-gray-700 mb-6">
+              <div className="p-8 dark:bg-gray-900">
+                <p className="text-gray-700 dark:text-gray-200 mb-6">
                   The fundamental rights guaranteed to every Indian citizen,
                   including the right to equality, freedom of speech, right to
                   life, and protection from discrimination.
                 </p>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-800 mb-2">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">
                       Key Rights Include:
                     </h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
+                    <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                       <li>• Right to Equality (Articles 14-18)</li>
                       <li>• Right to Freedom (Articles 19-22)</li>
                       <li>• Right against Exploitation (Articles 23-24)</li>
@@ -66,11 +66,11 @@ const LegalAtlas = () => {
                     </ul>
                   </div>
 
-                  <div className="bg-gray-50 p-4 rounded-lg">
-                    <h4 className="font-semibold text-gray-800 mb-2">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
+                    <h4 className="font-semibold text-gray-800 dark:text-gray-100 mb-2">
                       Popular Articles:
                     </h4>
-                    <ul className="text-sm text-gray-600 space-y-1">
+                    <ul className="text-sm text-gray-600 dark:text-gray-300 space-y-1">
                       <li>• Article 14: Equality before Law</li>
                       <li>• Article 19: Freedom of Speech</li>
                       <li>• Article 21: Right to Life</li>
@@ -207,7 +207,7 @@ const LegalAtlas = () => {
       </section>
 
       {/* Quick Search */}
-      <section className="py-16 bg-white">
+  <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
             Looking for Something Specific?

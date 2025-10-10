@@ -1,3 +1,101 @@
+.satyamev-text-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+}
+.satyamev-text-banner .side-img {
+  height: 13rem;
+  width: auto;
+  margin: 0 2vw;
+  opacity: 0.85;
+  filter: drop-shadow(0 0 28px #eab30866);
+  transition: opacity 0.3s;
+}
+.dark .satyamev-text-banner .side-img.light-img {
+  display: inline;
+  opacity: 0.8;
+  filter: drop-shadow(0 0 18px #fde68a88);
+}
+.dark .satyamev-text-banner .side-img.dark-img {
+  display: none;
+}
+.satyamev-text-banner .side-img.light-img {
+  display: none;
+}
+.satyamev-text-banner .side-img.dark-img {
+  display: inline;
+}
+/* Full-width, animated, inspiring Satyamev Jayate text overlay */
+.satyamev-text-banner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 0;
+}
+.satyamev-text-banner span {
+  width: 100%;
+  text-align: center;
+  font-family: 'Merriweather', serif;
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  color: #eab308;
+  text-shadow: 0 2px 24px #eab30888, 0 1px 0 #fff, 0 0 40px #eab30844;
+  opacity: 0.18;
+  animation: satyamev-banner-glow 4s ease-in-out infinite alternate;
+  filter: blur(0.5px);
+}
+.dark .satyamev-text-banner span {
+  color: #fde68a;
+  text-shadow: 0 2px 32px #fde68a88, 0 1px 0 #fff, 0 0 60px #fde68a44;
+  opacity: 0.22;
+}
+@keyframes satyamev-banner-glow {
+  0% { opacity: 0.14; filter: blur(0.5px); }
+  100% { opacity: 0.28; filter: blur(1.5px); }
+}
+/* Satyamev Jayate animated background utility */
+.satyamev-bg {
+  position: relative;
+  overflow: hidden;
+}
+.satyamev-bg .satyamev-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  font-family: 'Merriweather', serif;
+  font-size: 3rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  color: #eab308;
+  opacity: 0.18;
+  white-space: nowrap;
+  animation: satyamev-fade 4s ease-in-out infinite alternate;
+  pointer-events: none;
+  z-index: 0;
+}
+.dark .satyamev-bg .satyamev-text {
+  color: #fde68a;
+  opacity: 0.22;
+}
+@keyframes satyamev-fade {
+  0% { opacity: 0.12; transform: translate(-50%, -50%) scale(1.1); }
+  100% { opacity: 0.22; transform: translate(-50%, -50%) scale(1.3); }
+}
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,16 +103,29 @@
 /* Custom base styles */
 @layer base {
   body {
-    @apply font-body text-gray-900 bg-gray-50;
+    @apply font-body text-gray-900 bg-gray-50 transition-colors duration-300;
   }
-  
   h1, h2, h3, h4, h5, h6 {
     @apply font-heading;
   }
-  
-  /* Smooth scrolling */
   html {
     scroll-behavior: smooth;
+  }
+  /* Dark mode styles */
+  .dark body {
+    @apply bg-gray-900 text-gray-100;
+  }
+  .dark .card {
+    @apply bg-gray-800 border-gray-700 text-gray-100;
+  }
+  .dark .btn-primary {
+    @apply bg-primary-700 hover:bg-primary-800 text-white;
+  }
+  .dark .btn-secondary {
+    @apply bg-secondary-700 hover:bg-secondary-800 text-white;
+  }
+  .dark .btn-outline {
+    @apply border-primary-400 text-primary-200 hover:bg-primary-700 hover:text-white;
   }
 }
 

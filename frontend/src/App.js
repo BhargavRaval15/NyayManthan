@@ -34,14 +34,14 @@ function App() {
 
 // Simple 404 page component
 const NotFoundPage = () => (
-  <div className="container mx-auto px-4 py-16 text-center">
-    <h1 className="text-4xl font-bold text-gray-800 mb-4">
+  <div className="container mx-auto px-4 py-16 text-center bg-gray-50 dark:bg-gray-900">
+    <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-4">
       404 - Page Not Found
     </h1>
-    <p className="text-gray-600 mb-8">
+    <p className="text-gray-600 dark:text-gray-300 mb-8">
       The page you're looking for doesn't exist.
     </p>
-    <a href="/" className="btn-primary">
+    <a href="/" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
       Go Back Home
     </a>
   </div>

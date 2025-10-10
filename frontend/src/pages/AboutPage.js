@@ -3,15 +3,15 @@ import { Link } from "react-router-dom";
 
 const AboutPage = () => {
   return (
-    <div className="min-h-screen bg-gray-50">
+  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-      <section className="bg-white py-16">
+  <section className="bg-white dark:bg-gray-800 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 mb-6">
+            <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 dark:text-white mb-6">
               About NyayManthan
             </h1>
-            <p className="text-xl text-gray-600 mb-8">
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               Making the Indian Constitution accessible to every citizen through
               AI-powered simplification
             </p>
@@ -20,39 +20,39 @@ const AboutPage = () => {
       </section>
 
       {/* Mission Section */}
-      <section className="py-16">
+  <section className="py-16 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl font-bold text-gray-800 mb-6">
+                <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
                   Our Mission
                 </h2>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
                   The Indian Constitution is the supreme law of our nation, but
                   its complex legal language often makes it difficult for
                   ordinary citizens to understand their rights and duties.
                 </p>
-                <p className="text-gray-600 mb-4">
+                <p className="text-gray-600 dark:text-gray-300 mb-4">
                   NyayManthan bridges this gap by using advanced AI technology
                   to simplify constitutional articles, making them accessible to
                   everyone regardless of their legal background.
                 </p>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   We believe that every citizen has the right to understand
                   their fundamental rights, directive principles, and
                   fundamental duties in simple, clear language.
                 </p>
               </div>
-              <div className="bg-primary-50 p-8 rounded-2xl">
+              <div className="bg-primary-50 dark:bg-primary-900 p-8 rounded-2xl">
                 <div className="text-center">
                   <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
                     <span className="text-white text-2xl font-bold">न्</span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2">
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
                     Citizen-Centric Approach
                   </h3>
-                  <p className="text-gray-600 text-sm">
+                  <p className="text-gray-600 dark:text-gray-300 text-sm">
                     Designed for citizens, by citizens, to democratize
                     constitutional knowledge.
                   </p>
@@ -64,16 +64,16 @@ const AboutPage = () => {
       </section>
 
       {/* Features Overview */}
-      <section className="py-16 bg-white">
+  <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-800 dark:text-white text-center mb-12">
               What Makes NyayManthan Special?
             </h2>
 
             <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="text-center dark:bg-gray-900 dark:border-gray-700 dark:text-white">
+                <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
                     className="w-8 h-8 text-blue-600"
                     fill="none"
@@ -88,17 +88,17 @@ const AboutPage = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-3">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-3">
                   AI-Powered Simplification
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Advanced AI technology converts complex legal language into
                   easy-to-understand explanations.
                 </p>
               </div>
 
-              <div className="text-center">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="text-center dark:bg-gray-900 dark:border-gray-700 dark:text-white">
+                <div className="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
                   <svg
                     className="w-8 h-8 text-green-600"
                     fill="none"
@@ -113,10 +113,10 @@ const AboutPage = () => {
                     />
                   </svg>
                 </div>
-                <h3 className="text-lg font-bold text-gray-800 mb-3">
+                <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-3">
                   Structured Learning
                 </h3>
-                <p className="text-gray-600">
+                <p className="text-gray-600 dark:text-gray-300">
                   Organized content structure helps you navigate through
                   different parts of the Constitution systematically.
                 </p>
@@ -285,7 +285,7 @@ const AboutPage = () => {
       </section>
 
       {/* Technology Stack */}
-      <section className="py-16 bg-white">
+  <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">

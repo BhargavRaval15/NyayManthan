@@ -13,8 +13,22 @@ const Navbar = () => {
     }
   };
 
+  // Dark mode toggle
+  const [darkMode, setDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
+  React.useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
+
   return (
-    <nav className="bg-white shadow-lg border-b border-gray-200">
+  <nav className={"shadow-lg border-b " + (darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200") }>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo and Brand */}
@@ -23,10 +37,10 @@ const Navbar = () => {
               <span className="text-white font-bold text-xl">न्</span>
             </div>
             <div className="flex flex-col">
-              <span className="text-2xl font-heading font-bold text-gray-800">
+              <span className="text-2xl font-heading font-bold text-gray-800 dark:text-white">
                 NyayManthan
               </span>
-              <span className="text-xs text-gray-600">
+              <span className="text-xs text-gray-600 dark:text-gray-300">
                 Learn Constitution Simply
               </span>
             </div>
@@ -34,21 +48,28 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
+            <button
+              className="btn-outline px-3 py-1 rounded-full text-xs"
+              onClick={() => setDarkMode((d) => !d)}
+              aria-label="Toggle dark mode"
+            >
+              {darkMode ? '🌙 Dark' : '☀️ Light'}
+            </button>
             <Link
               to="/"
-              className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
+              className="text-gray-700 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
             >
               Home
             </Link>
             <Link
               to="/legal-atlas"
-              className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
+              className="text-gray-700 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
             >
               Legal Atlas
             </Link>
             <Link
               to="/about"
-              className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
+              className="text-gray-700 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 font-medium transition-colors"
             >
               About
             </Link>
@@ -61,11 +82,11 @@ const Navbar = () => {
                 type="text"
                 name="search"
                 placeholder="Search articles..."
-                className="w-64 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="w-64 px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
               />
               <button
                 type="submit"
-                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-primary-600"
+                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
               >
                 <svg
                   className="w-5 h-5"
@@ -87,7 +108,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-gray-100"
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
           >
             <svg
               className="w-6 h-6"
@@ -107,25 +128,25 @@ const Navbar = () => {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden border-t border-gray-200 py-4">
+          <div className="md:hidden border-t border-gray-200 dark:border-gray-700 py-4">
             <div className="flex flex-col space-y-4">
               <Link
                 to="/"
-                className="text-gray-700 hover:text-primary-600 font-medium px-2 py-1"
+                className="text-gray-700 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 font-medium px-2 py-1"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Home
               </Link>
               <Link
                 to="/legal-atlas"
-                className="text-gray-700 hover:text-primary-600 font-medium px-2 py-1"
+                className="text-gray-700 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 font-medium px-2 py-1"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Legal Atlas
               </Link>
               <Link
                 to="/about"
-                className="text-gray-700 hover:text-primary-600 font-medium px-2 py-1"
+                className="text-gray-700 dark:text-white hover:text-primary-600 dark:hover:text-primary-400 font-medium px-2 py-1"
                 onClick={() => setIsMenuOpen(false)}
               >
                 About
@@ -138,11 +159,11 @@ const Navbar = () => {
                     type="text"
                     name="search"
                     placeholder="Search articles..."
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-gray-300 dark:border-gray-700 dark:bg-gray-800 dark:text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                   />
                   <button
                     type="submit"
-                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-primary-600"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400"
                   >
                     <svg
                       className="w-5 h-5"
