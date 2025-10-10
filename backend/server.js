@@ -39,8 +39,10 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 // Routes
+
 app.use("/api/articles", require("./routes/articles"));
 app.use("/api/ai", require("./routes/ai"));
+app.use("/api", require("./routes/podcast"));
 
 // Health check route
 app.get("/api/health", (req, res) => {

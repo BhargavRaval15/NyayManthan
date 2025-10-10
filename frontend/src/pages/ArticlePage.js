@@ -8,6 +8,53 @@ const ArticlePage = () => {
   const { articleNumber } = useParams();
   const [article, setArticle] = useState(null);
   const [simplifiedText, setSimplifiedText] = useState(null);
+  // Podcast state
+  const [podcastLoading, setPodcastLoading] = useState(false);
+  const [podcastScript, setPodcastScript] = useState(null);
+  const [podcastAudio, setPodcastAudio] = useState(null);
+  const [podcastError, setPodcastError] = useState(null);
+  const [playing, setPlaying] = useState({
+    narrator: false,
+    host: false,
+    guest: false,
+  });
+  const audioRef = React.createRef();
+  // Podcast generation handler
+  const handleGeneratePodcast = async () => {
+    setPodcastLoading(true);
+    setPodcastError(null);
+    setPodcastScript(null);
+    setPodcastAudio(null);
+    try {
+      const res = await fetch("/api/generate-podcast", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic: article.originalText }),
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      setPodcastScript(data.script);
+      setPodcastAudio(data.audio);
+    } catch (err) {
+      setPodcastError(err.message || "Failed to generate podcast");
+    } finally {
+      setPodcastLoading(false);
+    }
+  };
+
+  // Play audio for a speaker
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+      setPlaying(true);
+    }
+  };
+  const handlePause = () => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      setPlaying(false);
+    }
+  };
   const [loading, setLoading] = useState(true);
   const [simplifying, setSimplifying] = useState(false);
   const [error, setError] = useState(null);
@@ -319,6 +366,89 @@ const ArticlePage = () => {
                   </div>
                 </div>
               )}
+
+              {/* Podcast Feature */}
+
+              <div className="card">
+                <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                  <svg
+                    className="w-6 h-6 text-indigo-600 mr-2"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 19V6h13M5 6v13h13"
+                    />
+                  </svg>
+                  AI Story Generator
+                </h3>
+                <button
+                  onClick={handleGeneratePodcast}
+                  disabled={podcastLoading}
+                  className="btn-primary mb-4"
+                >
+                  {podcastLoading
+                    ? "Generating Story..."
+                    : "Listen Story / Podcast"}
+                </button>
+                {podcastError && (
+                  <div className="text-red-600 mb-2">{podcastError}</div>
+                )}
+                {podcastScript && (
+                  <div className="mb-4">
+                    <h4 className="font-semibold mb-2">Story</h4>
+                    <pre className="bg-gray-100 p-3 rounded text-sm whitespace-pre-wrap">
+                      {podcastScript}
+                    </pre>
+                  </div>
+                )}
+                {podcastAudio ? (
+                  <div>
+                    <h4 className="font-semibold mb-2">Audio</h4>
+                    {/* Native browser controls */}
+                    <audio
+                      ref={audioRef}
+                      src={`data:audio/mpeg;base64,${podcastAudio}`}
+                      controls
+                      style={{ width: "100%", marginBottom: "8px" }}
+                      onPlay={() => setPlaying(true)}
+                      onPause={() => setPlaying(false)}
+                      tabIndex={0}
+                    />
+                    {/* Custom play/pause button, more prominent */}
+                    <div
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: "12px",
+                        marginTop: "8px",
+                      }}
+                    >
+                      <button
+                        className="btn-secondary text-lg px-6 py-2"
+                        onClick={playing ? handlePause : handlePlay}
+                        style={{ minWidth: "100px", fontWeight: "bold" }}
+                      >
+                        {playing ? "Pause" : "Play"}
+                      </button>
+                      <span className="text-gray-500 text-sm">
+                        (Tip: Click audio and press Space to play/pause)
+                      </span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="bg-red-50 border border-red-200 rounded-lg p-4 mt-2">
+                    <span className="text-red-700 font-semibold">
+                      Audio could not be generated for this story. Please try
+                      again or check your backend settings.
+                    </span>
+                  </div>
+                )}
+              </div>
 
               {/* Error Message */}
               {error && (
