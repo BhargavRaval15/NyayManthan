@@ -5,6 +5,7 @@ import articleService from "../services/articleService";
 import aiService from "../services/aiService";
 
 const ArticlePage = () => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const { articleNumber } = useParams();
   const [article, setArticle] = useState(null);
   const [simplifiedText, setSimplifiedText] = useState(null);
@@ -260,35 +261,60 @@ const ArticlePage = () => {
                   </option>
                 ))}
               </select>
-              <button
-                onClick={handleSimplify}
-                disabled={simplifying}
-                className="btn-primary flex items-center space-x-2"
-              >
-                {simplifying ? (
-                  <>
-                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                    <span>Simplifying...</span>
-                  </>
-                ) : (
-                  <>
-                    <svg
-                      className="w-5 h-5"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
-                      />
-                    </svg>
-                    <span>AI Simplify</span>
-                  </>
-                )}
-              </button>
+              {isAuthenticated ? (
+                <button
+                  onClick={handleSimplify}
+                  disabled={simplifying}
+                  className="btn-primary flex items-center space-x-2"
+                >
+                  {simplifying ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Simplifying...</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg
+                        className="w-5 h-5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M13 10V3L4 14h7v7l9-11h-7z"
+                        />
+                      </svg>
+                      <span>AI Simplify</span>
+                    </>
+                  )}
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    alert("Please login to use AI Simplify.");
+                    window.location.href = "/login";
+                  }}
+                  className="btn-primary flex items-center space-x-2 opacity-80"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                  <span>Login to Simplify</span>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -445,15 +471,27 @@ const ArticlePage = () => {
                       </option>
                     ))}
                   </select>
-                  <button
-                    onClick={handleGeneratePodcast}
-                    disabled={podcastLoading}
-                    className="btn-primary"
-                  >
-                    {podcastLoading
-                      ? "Generating Story..."
-                      : "Listen Story / Podcast"}
-                  </button>
+                  {isAuthenticated ? (
+                    <button
+                      onClick={handleGeneratePodcast}
+                      disabled={podcastLoading}
+                      className="btn-primary"
+                    >
+                      {podcastLoading
+                        ? "Generating Story..."
+                        : "Listen Story / Podcast"}
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        alert("Please login to generate and listen to stories.");
+                        window.location.href = "/login";
+                      }}
+                      className="btn-primary opacity-80"
+                    >
+                      Login to Generate Story
+                    </button>
+                  )}
                 </div>
                 {podcastError && (
                   <div className="text-red-600 mb-2">{podcastError}</div>

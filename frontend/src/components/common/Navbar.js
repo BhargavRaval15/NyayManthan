@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -80,6 +81,44 @@ const Navbar = () => {
             >
               About
             </Link>
+            {isAuthenticated ? (
+              <div className="relative">
+                <button className="flex items-center space-x-2 px-4 py-2 rounded-full bg-primary-600 text-white font-semibold focus:outline-none" onClick={() => setIsMenuOpen((open) => !open)}>
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" />
+                  </svg>
+                  <span>Profile</span>
+                </button>
+                {isMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded shadow-lg z-50">
+                    <button
+                      className="w-full text-left px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900"
+                      onClick={() => {
+                        localStorage.removeItem("isAuthenticated");
+                        setIsMenuOpen(false);
+                        window.location.reload();
+                      }}
+                    >Logout</button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <>
+                <Link
+                  to="/login"
+                  className="text-primary-600 dark:text-primary-400 font-semibold hover:underline"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="text-primary-600 dark:text-primary-400 font-semibold hover:underline"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
 
           {/* Search Bar */}

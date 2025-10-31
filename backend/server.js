@@ -43,6 +43,7 @@ mongoose
 app.use("/api/articles", require("./routes/articles"));
 app.use("/api/ai", require("./routes/ai"));
 app.use("/api", require("./routes/podcast"));
+app.use("/api/auth", require("./routes/auth"));
 
 // Health check route
 app.get("/api/health", (req, res) => {
