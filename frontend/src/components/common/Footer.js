@@ -3,17 +3,21 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-  <footer className="bg-gray-800 dark:bg-gray-900 text-white">
+    <footer className="bg-gray-800 dark:bg-gray-900 text-white">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Section */}
           <div className="md:col-span-2">
             <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-xl">न्</span>
-              </div>
+              <img
+                src={process.env.PUBLIC_URL + "/images/logo.jpg"}
+                alt="NyayManthan Logo"
+                className="w-20 h-20 rounded-full object-cover border-2 border-primary-600 shadow-lg"
+              />
               <div>
-                <h3 className="text-xl font-heading font-bold text-white">NyayManthan</h3>
+                <h3 className="text-xl font-heading font-bold text-white">
+                  NyayManthan
+                </h3>
                 <p className="text-gray-400 dark:text-gray-300 text-sm">
                   Learn Constitution Simply
                 </p>
@@ -35,7 +39,9 @@ const Footer = () => {
 
           {/* Quick Links */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Quick Links</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white">
+              Quick Links
+            </h4>
             <ul className="space-y-2">
               <li>
                 <Link
@@ -82,32 +88,42 @@ const Footer = () => {
 
           {/* Constitutional Parts */}
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-white">Constitution Parts</h4>
+            <h4 className="text-lg font-semibold mb-4 text-white">
+              Constitution Parts
+            </h4>
             <ul className="space-y-2">
               <li>
-                <span className="text-gray-300 dark:text-gray-200">Part III</span>
+                <span className="text-gray-300 dark:text-gray-200">
+                  Part III
+                </span>
                 <span className="text-gray-500 dark:text-gray-400 text-sm block">
                   Articles 12-35
                 </span>
               </li>
               <li>
-                <span className="text-gray-300 dark:text-gray-200">Part IV</span>
+                <span className="text-gray-300 dark:text-gray-200">
+                  Part IV
+                </span>
                 <span className="text-gray-500 dark:text-gray-400 text-sm block">
                   Articles 36-51
                 </span>
               </li>
               <li>
-                <span className="text-gray-300 dark:text-gray-200">Part IV-A</span>
-                <span className="text-gray-500 dark:text-gray-400 text-sm block">Article 51A</span>
+                <span className="text-gray-300 dark:text-gray-200">
+                  Part IV-A
+                </span>
+                <span className="text-gray-500 dark:text-gray-400 text-sm block">
+                  Article 51A
+                </span>
               </li>
             </ul>
           </div>
         </div>
 
         {/* Bottom Section */}
-  <div className="border-t border-gray-700 dark:border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <div className="border-t border-gray-700 dark:border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
           <div className="text-gray-400 dark:text-gray-300 text-sm mb-4 md:mb-0">
-            <p>© 2024 NyayManthan. Built for educational purposes.</p>
+            <p>© 2025 NyayManthan. Built for educational purposes.</p>
             <p className="mt-1">
               Constitution of India © Government of India. All rights reserved.
             </p>
@@ -135,13 +151,6 @@ const Footer = () => {
               Terms of Service
             </a>
           </div>
-        </div>
-
-        {/* Development Phase Indicator */}
-        <div className="mt-6 text-center">
-          <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-white">
-            Phase 1: Core MVP - Article Simplifier
-          </span>
         </div>
       </div>
     </footer>

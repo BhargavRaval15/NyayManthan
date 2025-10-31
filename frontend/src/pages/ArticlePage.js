@@ -9,11 +9,46 @@ const ArticlePage = () => {
   const [article, setArticle] = useState(null);
   const [simplifiedText, setSimplifiedText] = useState(null);
   // Podcast state
+  // AI Chat state
+  const [chatInput, setChatInput] = useState("");
+  const [chatLoading, setChatLoading] = useState(false);
+  const [chatError, setChatError] = useState(null);
+  const [chatResults, setChatResults] = useState(null);
+  // Handler for AI chat mapping
+  const handleChatSubmit = async (e) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+    setChatLoading(true);
+    setChatError(null);
+    setChatResults(null);
+    try {
+      // Example API endpoint: /api/map-problem-to-articles
+      const res = await fetch("/api/map-problem-to-articles", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          problem: chatInput,
+          language: selectedLanguage,
+        }),
+      });
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+      setChatResults(data);
+    } catch (err) {
+      setChatError(err.message || "Failed to map problem to articles");
+    } finally {
+      setChatLoading(false);
+    }
+  };
   const [podcastLoading, setPodcastLoading] = useState(false);
   const [podcastScript, setPodcastScript] = useState(null);
   const [podcastAudio, setPodcastAudio] = useState(null);
   const [podcastError, setPodcastError] = useState(null);
-  const [playing, setPlaying] = useState({ narrator: false, host: false, guest: false });
+  const [playing, setPlaying] = useState({
+    narrator: false,
+    host: false,
+    guest: false,
+  });
   const audioRef = React.createRef();
 
   // Language selection
@@ -33,7 +68,10 @@ const ArticlePage = () => {
       const res = await fetch("/api/generate-podcast", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic: article.originalText, language: selectedLanguage }),
+        body: JSON.stringify({
+          topic: article.originalText,
+          language: selectedLanguage,
+        }),
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
@@ -96,7 +134,10 @@ const ArticlePage = () => {
     try {
       setSimplifying(true);
       setError(null);
-  const result = await aiService.simplifyArticle(article.articleNumber, selectedLanguage);
+      const result = await aiService.simplifyArticle(
+        article.articleNumber,
+        selectedLanguage
+      );
       if (result.success) {
         setSimplifiedText(result.data.simplifiedText);
         setArticle((prev) => ({
@@ -145,12 +186,15 @@ const ArticlePage = () => {
     return (
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
-              <div className="text-red-500 text-6xl mb-4">⚠️</div>
+          <div className="text-red-500 text-6xl mb-4">⚠️</div>
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
             Article Not Found
           </h1>
           <p className="text-gray-600 dark:text-gray-300 mb-4">{error}</p>
-          <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+          <Link
+            to="/legal-atlas"
+            className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+          >
             Back to Legal Atlas
           </Link>
         </div>
@@ -159,9 +203,9 @@ const ArticlePage = () => {
   }
 
   return (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-  <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-8">
+      <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-8">
         <div className="container mx-auto px-4">
           <div className="flex items-center space-x-2 text-sm text-gray-600 dark:text-gray-300 mb-4">
             <Link to="/" className="hover:text-primary-600">
@@ -198,18 +242,22 @@ const ArticlePage = () => {
               <h1 className="text-3xl md:text-4xl font-heading font-bold text-gray-800 dark:text-gray-100">
                 Article {article.articleNumber}
               </h1>
-              <h2 className="text-xl text-gray-600 dark:text-gray-300 mt-2">{article.title}</h2>
+              <h2 className="text-xl text-gray-600 dark:text-gray-300 mt-2">
+                {article.title}
+              </h2>
             </div>
 
             <div className="flex space-x-3 items-center">
               <select
                 value={selectedLanguage}
-                onChange={e => setSelectedLanguage(e.target.value)}
+                onChange={(e) => setSelectedLanguage(e.target.value)}
                 className="border rounded px-2 py-1 mr-2 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-                style={{ minWidth: '120px' }}
+                style={{ minWidth: "120px" }}
               >
-                {languageOptions.map(opt => (
-                  <option key={opt.value} value={opt.value}>{opt.label}</option>
+                {languageOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value}>
+                    {opt.label}
+                  </option>
                 ))}
               </select>
               <button
@@ -387,12 +435,14 @@ const ArticlePage = () => {
                 <div className="flex space-x-3 items-center mb-4">
                   <select
                     value={selectedLanguage}
-                    onChange={e => setSelectedLanguage(e.target.value)}
+                    onChange={(e) => setSelectedLanguage(e.target.value)}
                     className="border rounded px-2 py-1 dark:bg-gray-800 dark:text-white dark:border-gray-700"
-                    style={{ minWidth: '120px' }}
+                    style={{ minWidth: "120px" }}
                   >
-                    {languageOptions.map(opt => (
-                      <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    {languageOptions.map((opt) => (
+                      <option key={opt.value} value={opt.value}>
+                        {opt.label}
+                      </option>
                     ))}
                   </select>
                   <button
@@ -400,7 +450,9 @@ const ArticlePage = () => {
                     disabled={podcastLoading}
                     className="btn-primary"
                   >
-                    {podcastLoading ? "Generating Story..." : "Listen Story / Podcast"}
+                    {podcastLoading
+                      ? "Generating Story..."
+                      : "Listen Story / Podcast"}
                   </button>
                 </div>
                 {podcastError && (
@@ -476,7 +528,9 @@ const ArticlePage = () => {
                           d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16c-.77.833.192 2.5 1.732 2.5z"
                         />
                       </svg>
-                      <span className="text-red-700 dark:text-red-200">{error}</span>
+                      <span className="text-red-700 dark:text-red-200">
+                        {error}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -492,7 +546,10 @@ const ArticlePage = () => {
                     Click the "AI Simplify" button to get an easy-to-understand
                     explanation of this article.
                   </p>
-                  <button onClick={handleSimplify} className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+                  <button
+                    onClick={handleSimplify}
+                    className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+                  >
                     Get AI Simplification
                   </button>
                 </div>
@@ -514,13 +571,17 @@ const ArticlePage = () => {
                     <p className="font-medium">{article.articleNumber}</p>
                   </div>
                   <div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Part:</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                      Part:
+                    </span>
                     <p className="font-medium">
                       {article.part} - {article.partName}
                     </p>
                   </div>
                   <div>
-                    <span className="text-sm text-gray-600 dark:text-gray-300">Views:</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                      Views:
+                    </span>
                     <p className="font-medium">{article.viewCount || 0}</p>
                   </div>
                   {article.lastSimplified && (
@@ -539,7 +600,9 @@ const ArticlePage = () => {
               {/* Tags */}
               {article.tags && article.tags.length > 0 && (
                 <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
-                  <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">Tags</h3>
+                  <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
+                    Tags
+                  </h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map((tag, index) => (
                       <span
@@ -554,7 +617,7 @@ const ArticlePage = () => {
               )}
 
               {/* Navigation */}
-                <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
+              <div className="card dark:bg-gray-800 dark:border-gray-700 dark:text-gray-100">
                 <h3 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-4">
                   Navigation
                 </h3>

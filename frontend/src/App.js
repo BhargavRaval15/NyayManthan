@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
+import FloatingChatbot from "./components/FloatingChatbot";
 import HomePage from "./pages/HomePage";
 import LegalAtlas from "./pages/LegalAtlas";
 import PartPage from "./pages/PartPage";
@@ -27,6 +28,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+        <FloatingChatbot />
       </div>
     </Router>
   );
@@ -41,7 +43,10 @@ const NotFoundPage = () => (
     <p className="text-gray-600 dark:text-gray-300 mb-8">
       The page you're looking for doesn't exist.
     </p>
-    <a href="/" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+    <a
+      href="/"
+      className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+    >
       Go Back Home
     </a>
   </div>

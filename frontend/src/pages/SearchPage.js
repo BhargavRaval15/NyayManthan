@@ -66,7 +66,7 @@ const SearchPage = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-  <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-12">
+      <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-12">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-4xl font-heading font-bold text-gray-800 dark:text-white text-center mb-6">
@@ -122,7 +122,9 @@ const SearchPage = () => {
           {loading && (
             <div className="text-center">
               <div className="loading-spinner mx-auto mb-4"></div>
-              <p className="text-gray-600 dark:text-gray-300">Searching articles...</p>
+              <p className="text-gray-600 dark:text-gray-300">
+                Searching articles...
+              </p>
             </div>
           )}
 
@@ -133,7 +135,10 @@ const SearchPage = () => {
                 Search Error
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-4">{error}</p>
-              <button onClick={() => handleSearch()} className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+              <button
+                onClick={() => handleSearch()}
+                className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+              >
                 Try Again
               </button>
             </div>
@@ -143,9 +148,9 @@ const SearchPage = () => {
             <>
               <div className="mb-8">
                 <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
-                Search Results
-              </h2>
-              <p className="text-gray-600 dark:text-gray-300">
+                  Search Results
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300">
                   {results.length > 0
                     ? `Found ${results.length} article${
                         results.length !== 1 ? "s" : ""
@@ -157,7 +162,10 @@ const SearchPage = () => {
               {results.length > 0 ? (
                 <div className="grid gap-6">
                   {results.map((article) => (
-                    <div key={article.articleNumber} className="card-hover dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+                    <div
+                      key={article.articleNumber}
+                      className="card-hover dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100"
+                    >
                       <div className="flex items-start justify-between">
                         <div className="flex-1">
                           <div className="flex items-center space-x-3 mb-2">
@@ -274,7 +282,9 @@ const SearchPage = () => {
                 </div>
               ) : (
                 <div className="text-center py-12 dark:bg-gray-900">
-                  <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">🔍</div>
+                  <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">
+                    🔍
+                  </div>
                   <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
                     No Results Found
                   </h3>
@@ -283,7 +293,10 @@ const SearchPage = () => {
                     different keywords or browse by parts.
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+                    <Link
+                      to="/legal-atlas"
+                      className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+                    >
                       Browse Legal Atlas
                     </Link>
                     <button

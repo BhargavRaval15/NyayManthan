@@ -29,7 +29,7 @@ router.post(
         });
       }
 
-  const { articleNumber, originalText, userId, force, language } = req.body;
+      const { articleNumber, originalText, userId, force, language } = req.body;
 
       // If no original text provided, fetch from database
       let textToSimplify = originalText;

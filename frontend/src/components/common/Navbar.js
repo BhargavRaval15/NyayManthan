@@ -15,27 +15,34 @@ const Navbar = () => {
 
   // Dark mode toggle
   const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('theme') === 'dark';
+    return localStorage.getItem("theme") === "dark";
   });
   React.useEffect(() => {
     if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('theme', 'dark');
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
     } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('theme', 'light');
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
     }
   }, [darkMode]);
 
   return (
-  <nav className={"shadow-lg border-b " + (darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200") }>
+    <nav
+      className={
+        "shadow-lg border-b " +
+        (darkMode ? "bg-gray-900 border-gray-800" : "bg-white border-gray-200")
+      }
+    >
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center py-4">
           {/* Logo and Brand */}
           <Link to="/" className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-primary-600 rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-xl">न्</span>
-            </div>
+            <img
+              src={process.env.PUBLIC_URL + "/images/logo.jpg"}
+              alt="NyayManthan Logo"
+              className="w-20 h-20 rounded-full object-cover border-2 border-primary-600 shadow-lg"
+            />
             <div className="flex flex-col">
               <span className="text-2xl font-heading font-bold text-gray-800 dark:text-white">
                 NyayManthan
@@ -53,7 +60,7 @@ const Navbar = () => {
               onClick={() => setDarkMode((d) => !d)}
               aria-label="Toggle dark mode"
             >
-              {darkMode ? '🌙 Dark' : '☀️ Light'}
+              {darkMode ? "🌙 Dark" : "☀️ Light"}
             </button>
             <Link
               to="/"

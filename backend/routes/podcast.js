@@ -29,7 +29,10 @@ async function generateAudio(text, voiceId) {
   try {
     // Use multilingual model for Hindi
     let model_id = "eleven_monolingual_v1";
-    if (voiceId === "FmBhnvP58BK0vz65OOj7" || voiceId === "FFmp1h1BMl0iVHA0JxrI") {
+    if (
+      voiceId === "FmBhnvP58BK0vz65OOj7" ||
+      voiceId === "FFmp1h1BMl0iVHA0JxrI"
+    ) {
       model_id = "eleven_multilingual_v2";
     }
     const audioResponse = await axios.post(

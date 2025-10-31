@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const LegalAtlas = () => {
   return (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
-  <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-12">
+      <section className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 py-12">
         <div className="container mx-auto px-4">
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 dark:text-gray-100 mb-4">
@@ -21,7 +21,7 @@ const LegalAtlas = () => {
       </section>
 
       {/* Constitution Parts */}
-  <section className="py-16 bg-white dark:bg-gray-800">
+      <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="grid gap-12 dark:bg-gray-800">
             {/* Part III - Fundamental Rights */}
@@ -38,7 +38,9 @@ const LegalAtlas = () => {
                     <p className="text-blue-600 dark:text-blue-300 font-medium">
                       Fundamental Rights
                     </p>
-                    <p className="text-gray-600 dark:text-gray-300 text-sm">Articles 12-35</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm">
+                      Articles 12-35
+                    </p>
                   </div>
                 </div>
               </div>
@@ -207,7 +209,7 @@ const LegalAtlas = () => {
       </section>
 
       {/* Quick Search */}
-  <section className="py-16 bg-white dark:bg-gray-800">
+      <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-gray-800 mb-4">
             Looking for Something Specific?

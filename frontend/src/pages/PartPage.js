@@ -105,7 +105,7 @@ const PartPage = () => {
 
   if (!currentPart) {
     return (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="text-red-500 text-6xl mb-4">⚠️</div>
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
@@ -114,7 +114,10 @@ const PartPage = () => {
           <p className="text-gray-600 dark:text-gray-300 mb-4">
             The requested part does not exist.
           </p>
-          <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+          <Link
+            to="/legal-atlas"
+            className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+          >
             Back to Legal Atlas
           </Link>
         </div>
@@ -124,17 +127,19 @@ const PartPage = () => {
 
   if (loading) {
     return (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
         <div className="text-center">
           <div className="loading-spinner mx-auto mb-4"></div>
-          <p className="text-gray-600 dark:text-gray-300">Loading articles...</p>
+          <p className="text-gray-600 dark:text-gray-300">
+            Loading articles...
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Header */}
       <section
         className={`${currentPart.bgColor} ${currentPart.borderColor} border-b py-12 dark:bg-gray-800 dark:border-gray-700`}
@@ -168,8 +173,12 @@ const PartPage = () => {
               <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 dark:text-gray-100">
                 Part {partNumber}
               </h1>
-              <h2 className="text-xl text-gray-600 dark:text-gray-300 mt-2">{currentPart.name}</h2>
-              <p className="text-gray-500 dark:text-gray-400 mt-1">{currentPart.range}</p>
+              <h2 className="text-xl text-gray-600 dark:text-gray-300 mt-2">
+                {currentPart.name}
+              </h2>
+              <p className="text-gray-500 dark:text-gray-400 mt-1">
+                {currentPart.range}
+              </p>
             </div>
           </div>
 
@@ -209,7 +218,7 @@ const PartPage = () => {
 
       {/* Search and Articles */}
       <section className="py-12">
-  <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4">
           {error ? (
             <div className="text-center">
               <div className="text-red-500 text-6xl mb-4">⚠️</div>
@@ -217,20 +226,28 @@ const PartPage = () => {
                 Error Loading Articles
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-4">{error}</p>
-              <button onClick={loadArticles} className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+              <button
+                onClick={loadArticles}
+                className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+              >
                 Try Again
               </button>
             </div>
           ) : articles.length === 0 ? (
             <div className="text-center">
-              <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">📄</div>
+              <div className="text-gray-400 dark:text-gray-500 text-6xl mb-4">
+                📄
+              </div>
               <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
                 No Articles Found
               </h2>
               <p className="text-gray-600 dark:text-gray-300 mb-4">
                 No articles available for this part.
               </p>
-              <Link to="/legal-atlas" className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600">
+              <Link
+                to="/legal-atlas"
+                className="btn-primary dark:bg-primary-700 dark:text-white dark:hover:bg-primary-600"
+              >
                 Back to Legal Atlas
               </Link>
             </div>
@@ -273,7 +290,10 @@ const PartPage = () => {
 
               <div className="grid gap-6">
                 {filteredArticles.map((article) => (
-                  <div key={article.articleNumber} className="card-hover dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100">
+                  <div
+                    key={article.articleNumber}
+                    className="card-hover dark:bg-gray-900 dark:border-gray-700 dark:text-gray-100"
+                  >
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center space-x-3 mb-2">
@@ -375,7 +395,7 @@ const PartPage = () => {
       </section>
 
       {/* Navigation */}
-  <section className="py-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+      <section className="py-8 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center">
             <Link

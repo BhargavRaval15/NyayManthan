@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 
 const AboutPage = () => {
   return (
-  <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* Hero Section */}
-  <section className="bg-white dark:bg-gray-800 py-16">
+      <section className="bg-white dark:bg-gray-800 py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-4xl md:text-5xl font-heading font-bold text-gray-800 dark:text-white mb-6">
@@ -20,7 +20,7 @@ const AboutPage = () => {
       </section>
 
       {/* Mission Section */}
-  <section className="py-16 dark:bg-gray-900">
+      <section className="py-16 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -46,9 +46,11 @@ const AboutPage = () => {
               </div>
               <div className="bg-primary-50 dark:bg-primary-900 p-8 rounded-2xl">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <span className="text-white text-2xl font-bold">न्</span>
-                  </div>
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/logo.jpg"}
+                    alt="NyayManthan Logo"
+                    className="w-32 h-32 rounded-full object-cover border-2 border-primary-600 shadow-lg mx-auto mb-4"
+                  />
                   <h3 className="text-lg font-bold text-gray-800 dark:text-white mb-2">
                     Citizen-Centric Approach
                   </h3>
@@ -64,7 +66,7 @@ const AboutPage = () => {
       </section>
 
       {/* Features Overview */}
-  <section className="py-16 bg-white dark:bg-gray-800">
+      <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-800 dark:text-white text-center mb-12">
@@ -285,7 +287,7 @@ const AboutPage = () => {
       </section>
 
       {/* Technology Stack */}
-  <section className="py-16 bg-white dark:bg-gray-800">
+      <section className="py-16 bg-white dark:bg-gray-800">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-800 text-center mb-12">
