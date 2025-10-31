@@ -484,7 +484,9 @@ const ArticlePage = () => {
                   ) : (
                     <button
                       onClick={() => {
-                        alert("Please login to generate and listen to stories.");
+                        alert(
+                          "Please login to generate and listen to stories."
+                        );
                         window.location.href = "/login";
                       }}
                       className="btn-primary opacity-80"

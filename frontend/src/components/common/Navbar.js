@@ -83,10 +83,29 @@ const Navbar = () => {
             </Link>
             {isAuthenticated ? (
               <div className="relative">
-                <button className="flex items-center space-x-2 px-4 py-2 rounded-full bg-primary-600 text-white font-semibold focus:outline-none" onClick={() => setIsMenuOpen((open) => !open)}>
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" />
+                <button
+                  className="flex items-center space-x-2 px-4 py-2 rounded-full bg-primary-600 text-white font-semibold focus:outline-none"
+                  onClick={() => setIsMenuOpen((open) => !open)}
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M12 14c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"
+                    />
                   </svg>
                   <span>Profile</span>
                 </button>
@@ -99,7 +118,9 @@ const Navbar = () => {
                         setIsMenuOpen(false);
                         window.location.reload();
                       }}
-                    >Logout</button>
+                    >
+                      Logout
+                    </button>
                   </div>
                 )}
               </div>
